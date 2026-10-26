@@ -1,0 +1,7 @@
+# Photos et vidéo brutes du client (les versions optimisées sont dans site/assets)
+images/
+# Fichiers système
+Thumbs.db
+desktop.ini
+.DS_Store
+.claude/
