@@ -87,6 +87,8 @@ main, .footer { position: relative; z-index: 1; }
   transition: transform .4s var(--ease), background .4s;
 }
 .header.is-hidden { transform: translateY(-100%); }
+/* fond sombre après le hero : logo et « Menu » restent lisibles sur les sections claires */
+.header.is-solid { background: rgba(30,30,30,.92); backdrop-filter: blur(10px); }
 .brand img { height: 30px; width: auto; }
 .menu-btn { background: none; border: 0; padding: 8px 0; cursor: pointer; font-size: .82rem; font-weight: 400; z-index: 120; position: relative; }
 .menu-btn span { display: inline-block; border-bottom: 1px solid transparent; transition: border-color .3s; }
@@ -132,8 +134,7 @@ main, .footer { position: relative; z-index: 1; }
 .marquee { overflow: hidden; padding: 34px 0; border-bottom: 1px solid var(--line); }
 .marquee__track { display: flex; gap: 72px; width: max-content; animation: defile 38s linear infinite; }
 .marquee span { display: inline-flex; align-items: center; gap: 12px; font-size: .9rem; font-weight: 500; white-space: nowrap; opacity: .85; }
-.marquee img { width: 30px; height: 30px; border-radius: 50%; filter: grayscale(1) contrast(1.1); }
-.marquee span:hover img { filter: none; }
+.marquee img { width: 30px; height: 30px; border-radius: 50%; }
 @keyframes defile { to { transform: translateX(-50%); } }
 
 /* ===== Manifeste sur photo noir et blanc ===== */
@@ -173,14 +174,18 @@ main, .footer { position: relative; z-index: 1; }
 .services__intro { margin: 0 auto 56px; text-align: center; }
 .cards { list-style: none; margin: 0 0 48px; padding: 0; display: grid; gap: 6px; }
 .card { position: relative; height: 380px; border-radius: 10px; overflow: hidden; background: #000; color: #fff; }
-.card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(14px) brightness(.8); transform: scale(1.15); transition: filter .7s var(--ease), transform .9s var(--ease); }
+/* photo nette, cadrée en haut pour garder les visages */
+.card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; transition: transform .9s var(--ease); }
+.card > img.haut { object-position: 50% 0; }
 .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,0) 60%); }
 .card__body { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 1; }
 .card h3 { font: 800 1.15rem/1 var(--font); font-stretch: 125%; text-transform: uppercase; }
 .card ul { list-style: none; padding: 0; margin: 0; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s var(--ease), opacity .4s, margin .4s; font-size: .82rem; }
 .card li { padding: 6px 0; border-top: 1px solid rgba(255,255,255,.2); }
 /* au survol (ou au toucher) : la photo devient nette et la liste apparaît */
-.card:hover > img, .card:focus-within > img, .card.is-open > img { filter: none; transform: scale(1); }
+.card:hover > img, .card:focus-within > img, .card.is-open > img { transform: scale(1.04); }
+/* écrans tactiles : pas de survol, la liste est toujours visible */
+@media (hover: none) { .card ul { max-height: 200px; opacity: 1; margin-top: 14px; } }
 .card:hover ul, .card:focus-within ul, .card.is-open ul { max-height: 200px; opacity: 1; margin-top: 14px; }
 
 /* ===== Disciplines : carrousel de portraits ===== */
@@ -189,8 +194,7 @@ main, .footer { position: relative; z-index: 1; }
 .rail { list-style: none; margin: 0; padding: 0 20px; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .rail::-webkit-scrollbar { display: none; }
 .rail li { flex: 0 0 62%; scroll-snap-align: center; }
-.rail img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: grayscale(.2); transition: filter .4s; }
-.rail li:hover img { filter: none; }
+.rail img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .rail span { display: block; font-size: .78rem; margin-top: 8px; }
 .dots { display: flex; justify-content: center; gap: 6px; margin-top: 22px; }
 .dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.25); transition: background .3s; }
@@ -207,14 +211,13 @@ main, .footer { position: relative; z-index: 1; }
 .field__list { list-style: none; margin: 0; padding: 0 20px; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; text-align: left; }
 .field__list::-webkit-scrollbar { display: none; }
 .field__list li { flex: 0 0 58%; scroll-snap-align: center; }
-.field__list img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: grayscale(1) contrast(1.1); transition: filter .5s; }
-.field__list li:hover img { filter: none; }
+.field__list img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .field__list p { display: flex; justify-content: space-between; gap: 10px; font-size: .72rem; margin-top: 6px; }
 .field__list span { color: var(--dim); }
 
 /* ===== Prêt à jouer : bloc divisé ===== */
 .ready { display: grid; }
-.ready__img img { width: 100%; height: 100%; min-height: 360px; object-fit: cover; object-position: 50% 25%; filter: grayscale(1) contrast(1.1); }
+.ready__img img { width: 100%; height: 100%; min-height: 360px; object-fit: cover; object-position: 50% 25%; }
 .ready__panel {
   display: grid; align-content: center; gap: 28px; padding: 56px 20px;
   color: var(--ink);

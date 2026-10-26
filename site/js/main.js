@@ -8,6 +8,7 @@ const header = document.querySelector('[data-header]');
 let dernierY = 0;
 addEventListener('scroll', () => {
   const y = scrollY;
+  header.classList.toggle('is-solid', y > 40);
   header.classList.toggle('is-hidden', y > 300 && y > dernierY && !document.body.classList.contains('no-scroll'));
   dernierY = y;
 }, { passive: true });
