@@ -5,3 +5,5 @@ Thumbs.db
 desktop.ini
 .DS_Store
 .claude/
+# Photos, vidéos et logo bruts du client (les versions optimisées sont dans site/assets)
+assets/
