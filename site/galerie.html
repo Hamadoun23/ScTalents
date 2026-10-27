@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galerie — SC+ Talent &amp; Sports</title>
+  <meta name="description" content="Photos et vidéos de SC+ Talent & Sports : jeunes talents, matchs, détections et événements sportifs au Mali.">
+  <meta name="theme-color" content="#1E1E1E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Galerie — SC+ Talent & Sports">
+  <meta property="og:description" content="Jeunes talents, matchs, détections et événements sportifs au Mali.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta property="og:locale" content="fr_FR">
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/logo/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/galerie.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <div class="grid-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <header class="header" data-header>
+    <a class="brand" href="index.html" aria-label="SC+ Talent & Sports — accueil">
+      <img src="assets/img/logo/horizontal-sombre.webp" alt="SC+ Talent & Sports" width="855" height="160">
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span data-menu-label>Menu</span></button>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <nav class="menu__links" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#agence">L’agence</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#disciplines">Disciplines</a>
+      <a href="galerie.html">Galerie</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <div class="menu__foot">
+      <span>Une filiale de S-ComPlus SARL</span>
+      <span>Bamako, Mali</span>
+    </div>
+  </div>
+
+  <main id="contenu" class="gal">
+    <div class="wrap">
+      <h1 class="display gal__title">Galerie</h1>
+      <p class="small gal__intro">Matchs, détections, portraits et événements : la vie de nos jeunes talents, en photos et en vidéos.</p>
+
+      <!-- Filtres (remplis par galerie.js) -->
+      <div class="gal__filters">
+        <div class="chips" data-filtre-type role="group" aria-label="Type de média">
+          <button type="button" class="chip is-on" data-type="tout">Tout</button>
+          <button type="button" class="chip" data-type="image">Photos</button>
+          <button type="button" class="chip" data-type="video">Vidéos</button>
+        </div>
+        <div class="chips" data-filtre-cat role="group" aria-label="Discipline"></div>
+      </div>
+
+      <ul class="gal__grid" data-grille aria-live="polite"></ul>
+      <p class="gal__empty small" data-vide hidden>Aucun média pour ce filtre.</p>
+      <p class="center"><button type="button" class="btn btn--line" data-plus hidden>Voir plus</button></p>
+    </div>
+  </main>
+
+  <!-- Visionneuse plein écran -->
+  <div class="lb" data-lb hidden role="dialog" aria-modal="true" aria-label="Visionneuse">
+    <button type="button" class="lb__close" data-lb-fermer aria-label="Fermer">Fermer</button>
+    <button type="button" class="lb__nav lb__nav--prev" data-lb-prev aria-label="Média précédent">←</button>
+    <figure class="lb__fig">
+      <div class="lb__media" data-lb-media></div>
+      <figcaption class="lb__cap">
+        <span class="lb__meta" data-lb-meta></span>
+        <h2 class="lb__titre" data-lb-titre></h2>
+        <p class="lb__desc" data-lb-desc></p>
+      </figcaption>
+    </figure>
+    <button type="button" class="lb__nav lb__nav--next" data-lb-next aria-label="Média suivant">→</button>
+  </div>
+
+  <footer class="footer">
+    <img class="footer__logo" src="assets/img/logo/logo-sombre.webp" alt="SC+ Talent & Sports — Sports Management Agency" width="900" height="875" loading="lazy">
+    <div class="wrap footer__bottom">
+      <span>© <span id="annee">2026</span> SC+ Talent &amp; Sports</span>
+      <span>Une filiale de S-ComPlus SARL · Mali</span>
+      <a href="admin/login.html" rel="nofollow">Admin</a>
+    </div>
+    <div class="stripe" aria-hidden="true"></div>
+  </footer>
+</body>
+</html>

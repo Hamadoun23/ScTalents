@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Back-office — SC+ Talent &amp; Sports</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin.js"></script>
+</head>
+<body data-page="admin" class="is-loading">
+  <header class="top">
+    <a href="../index.html" class="top__logo" title="Voir le site"><img src="../assets/img/logo/horizontal-sombre.webp" alt="SC+ Talent & Sports" width="855" height="160"></a>
+    <nav class="tabs" role="tablist">
+      <button type="button" class="tab is-on" role="tab" data-tab="medias" aria-selected="true">Médias</button>
+      <button type="button" class="tab" role="tab" data-tab="messages" aria-selected="false">Messages <span class="badge" data-badge hidden>0</span></button>
+    </nav>
+    <div class="top__user"><span data-user></span><button type="button" class="lien" data-logout>Déconnexion</button></div>
+  </header>
+
+  <main class="wrap">
+    <!-- ===== ONGLET MÉDIAS ===== -->
+    <section data-panel="medias">
+      <div class="ajouts">
+        <!-- Photos -->
+        <form class="bloc" data-form-photos>
+          <h2>Ajouter des photos</h2>
+          <label class="drop" data-drop>
+            <input type="file" accept="image/*" multiple data-photos hidden>
+            <strong>Glissez vos photos ici</strong>
+            <span>ou <u>choisissez-les</u> (plusieurs à la fois). Elles sont compressées avant l’envoi.</span>
+          </label>
+          <ul class="attente" data-attente></ul>
+          <div class="champs">
+            <label>Discipline<select name="categorie" data-cats></select></label>
+            <label class="plein">Description (commune à toutes les photos, facultative)<textarea name="description" rows="2" maxlength="1000"></textarea></label>
+          </div>
+          <div class="progress" data-prog-photos hidden><i></i><span></span></div>
+          <button class="btn btn--light" type="submit" disabled data-envoyer-photos>Publier les photos</button>
+        </form>
+
+        <!-- Vidéo -->
+        <form class="bloc" data-form-video>
+          <h2>Ajouter une vidéo</h2>
+          <div class="choix" role="radiogroup">
+            <label><input type="radio" name="mode" value="youtube" checked> Lien YouTube <small>(recommandé)</small></label>
+            <label><input type="radio" name="mode" value="mp4"> Fichier MP4 <small>(50 Mo max)</small></label>
+          </div>
+          <label data-mode="youtube">Lien YouTube<input name="lien" placeholder="https://youtu.be/… ou youtube.com/watch?v=…"></label>
+          <label data-mode="mp4" hidden>Fichier vidéo<input type="file" name="fichier" accept="video/mp4"></label>
+          <div class="champs">
+            <label>Titre<input name="titre" required maxlength="160"></label>
+            <label>Discipline<select name="categorie" data-cats></select></label>
+            <label class="plein">Description<textarea name="description" rows="3" maxlength="1000"></textarea></label>
+          </div>
+          <div class="progress" data-prog-video hidden><i></i><span></span></div>
+          <button class="btn btn--light" type="submit">Publier la vidéo</button>
+        </form>
+      </div>
+      <p class="msg" data-msg-medias role="status"></p>
+
+      <div class="liste-tete">
+        <h2>Médias publiés <small data-compte></small></h2>
+        <div class="chips" data-filtre-admin>
+          <button type="button" class="chip is-on" data-f="tout">Tout</button>
+          <button type="button" class="chip" data-f="image">Photos</button>
+          <button type="button" class="chip" data-f="video">Vidéos</button>
+          <button type="button" class="chip" data-f="masque">Masqués</button>
+        </div>
+      </div>
+      <ul class="medias" data-medias></ul>
+    </section>
+
+    <!-- ===== ONGLET MESSAGES ===== -->
+    <section data-panel="messages" hidden>
+      <h2>Messages reçus</h2>
+      <ul class="messages" data-messages></ul>
+    </section>
+  </main>
+</body>
+</html>
