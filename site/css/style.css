@@ -323,64 +323,6 @@ body.no-scroll .header { z-index: 120; }
   .faq__inner { grid-template-columns: 1fr 2fr; align-items: start; }
 }
 
-/* ===== Page galerie ===== */
-.gal { padding: 130px 0 var(--pad); }
-.gal__title { font-size: clamp(3rem, 12vw, 9rem); }
-.gal__intro { margin: 18px 0 40px; }
-.gal__filters { display: grid; gap: 10px; margin-bottom: 32px; }
-.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
-.chips::-webkit-scrollbar { display: none; }
-.chip { flex: none; height: 34px; padding: 0 14px; border-radius: 2px; border: 1px solid rgba(255,255,255,.25); background: none; font-size: .78rem; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
-.chip:hover { border-color: #fff; }
-.chip.is-on { background: #fff; color: #000; border-color: #fff; }
-/* grille en colonnes : les photos gardent leurs proportions */
-.gal__grid { list-style: none; margin: 0 0 40px; padding: 0; columns: 2; column-gap: 8px; }
-.gal__grid li { break-inside: avoid; margin-bottom: 8px; }
-.gal__item { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--char-2); cursor: pointer; overflow: hidden; border-radius: 4px; text-align: left; }
-.gal__item img { width: 100%; height: auto; display: block; transition: transform .8s var(--ease); }
-.gal__item:hover img { transform: scale(1.04); }
-.gal__cap { position: absolute; inset: auto 0 0 0; padding: 30px 10px 10px; display: grid; gap: 2px; background: linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,0)); }
-.gal__cap b { font-size: .78rem; font-weight: 600; line-height: 1.2; }
-.gal__cap small { font-size: .66rem; color: var(--dim); }
-/* bouton lecture : petit, en haut à gauche sur mobile ; centré sur ordinateur */
-.gal__play { position: absolute; left: 10px; top: 10px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.92); }
-.gal__play::after { content: ""; position: absolute; left: 13px; top: 10px; border: solid transparent; border-width: 7px 0 7px 11px; border-left-color: #000; }
-.gal__empty { padding: 40px 0; text-align: center; max-width: none; }
-
-/* Visionneuse */
-.lb { position: fixed; inset: 0; z-index: 200; background: rgba(12,12,12,.97); display: grid; place-items: center; padding: 56px 12px 16px; }
-.lb[hidden] { display: none; }
-.lb__fig { margin: 0; width: min(1100px, 100%); display: grid; gap: 14px; }
-.lb__media { display: grid; place-items: center; }
-.lb__media img { max-width: 100%; max-height: 72svh; width: auto; height: auto; border-radius: 4px; }
-.lb__media video { width: 100%; max-height: 72svh; border-radius: 4px; background: #000; }
-.lb__media iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 4px; background: #000; }
-.lb__cap { display: grid; gap: 6px; }
-.lb__meta { font-size: .7rem; color: var(--dim); letter-spacing: .04em; }
-.lb__titre { font: 800 1.1rem/1.1 var(--font); font-stretch: 125%; text-transform: uppercase; }
-.lb__desc { font-size: .88rem; color: rgba(255,255,255,.75); max-width: 70ch; }
-.lb__close { position: absolute; top: 14px; right: 16px; background: none; border: 0; font-size: .82rem; cursor: pointer; padding: 8px 0; }
-.lb__close:hover { text-decoration: underline; }
-.lb__nav { position: absolute; top: 40%; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3); background: rgba(30,30,30,.6); cursor: pointer; font-size: 1rem; }
-.lb__nav:hover { background: #fff; color: #000; }
-.lb__nav--prev { left: 8px; }
-.lb__nav--next { right: 8px; }
-
-@media (min-width: 640px) {
-  .gal__grid { columns: 3; }
-}
-@media (min-width: 960px) {
-  .gal { padding-top: 160px; }
-  .gal__grid { columns: 4; column-gap: 10px; }
-  .gal__play { left: 50%; top: 42%; width: 52px; height: 52px; margin: -26px 0 0 -26px; }
-  .gal__play::after { left: 21px; top: 16px; border-width: 10px 0 10px 16px; }
-  .gal__grid li { margin-bottom: 10px; }
-  .lb { padding: 64px 90px 24px; }
-  .lb__nav { top: 50%; width: 52px; height: 52px; }
-  .lb__nav--prev { left: 24px; }
-  .lb__nav--next { right: 24px; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal, .hero__title .line > span, .hero__in { opacity: 1; transform: none; }

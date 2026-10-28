@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Galerie — SC+ Talent &amp; Sports</title>
-  <meta name="description" content="Photos et vidéos de SC+ Talent & Sports : jeunes talents, matchs, détections et événements sportifs au Mali.">
+  <meta name="description" content="Du terrain de quartier au stade : la saison de nos jeunes talents racontée en photos et en vidéos.">
   <meta name="theme-color" content="#1E1E1E">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Galerie — SC+ Talent & Sports">
-  <meta property="og:description" content="Jeunes talents, matchs, détections et événements sportifs au Mali.">
+  <meta property="og:description" content="Du terrain de quartier au stade : la saison de nos jeunes talents en images.">
   <meta property="og:image" content="assets/img/og.jpg">
   <meta property="og:locale" content="fr_FR">
 
@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/galerie.css">
   <script>document.documentElement.classList.add('js')</script>
   <script type="module" src="js/main.js"></script>
   <script type="module" src="js/galerie.js"></script>
@@ -50,41 +51,226 @@
     </div>
   </div>
 
-  <main id="contenu" class="gal">
-    <div class="wrap">
-      <h1 class="display gal__title">Galerie</h1>
-      <p class="small gal__intro">Matchs, détections, portraits et événements : la vie de nos jeunes talents, en photos et en vidéos.</p>
+  <!-- Repère du chapitre en cours (rempli par galerie.js) -->
+  <div class="chap-tag" data-chap-tag aria-hidden="true"><b>00</b><span>Galerie</span></div>
 
-      <!-- Filtres (remplis par galerie.js) -->
-      <div class="gal__filters">
-        <div class="chips" data-filtre-type role="group" aria-label="Type de média">
-          <button type="button" class="chip is-on" data-type="tout">Tout</button>
-          <button type="button" class="chip" data-type="image">Photos</button>
-          <button type="button" class="chip" data-type="video">Vidéos</button>
-        </div>
-        <div class="chips" data-filtre-cat role="group" aria-label="Discipline"></div>
+  <main id="contenu">
+
+    <!-- ===== OUVERTURE : vidéo plein écran ===== -->
+    <section class="g-hero">
+      <video class="g-hero__video" data-auto muted loop playsinline preload="none"
+             poster="assets/img/galerie/hero-galerie.webp" data-src="assets/video/hero-galerie.mp4" aria-hidden="true"></video>
+      <div class="g-hero__shade"></div>
+      <div class="wrap g-hero__content">
+        <p class="g-kicker">Galerie · Saison 2026</p>
+        <h1 class="display g-hero__title">Du quartier<br>au stade.</h1>
+        <p class="g-hero__lead">L’histoire de nos jeunes talents, racontée par leurs images : les terrains en terre, les visages, l’apprentissage, les matchs, la parole et l’émotion.</p>
+        <a class="g-scroll" href="#ch1"><i></i>Commencer l’histoire</a>
       </div>
+    </section>
 
-      <ul class="gal__grid" data-grille aria-live="polite"></ul>
-      <p class="gal__empty small" data-vide hidden>Aucun média pour ce filtre.</p>
-      <p class="center"><button type="button" class="btn btn--line" data-plus hidden>Voir plus</button></p>
-    </div>
+    <!-- ===== 01 · LE QUARTIER ===== -->
+    <section class="ch" id="ch1" data-chap="01" data-nom="Le quartier">
+      <div class="wrap ch__head">
+        <span class="ch__num">01</span>
+        <h2 class="display ch__title">Le quartier</h2>
+        <p class="ch__text">Tout commence ici. Sur la terre rouge, entre deux poteaux, avec un ballon qui a déjà beaucoup vécu. C’est là que naît l’envie, et que nous allons chercher les talents.</p>
+      </div>
+      <div class="wrap duo">
+        <figure class="m m--wide"><img src="assets/img/sc/equipe-terre.webp" alt="Une équipe de jeunes posant sur un terrain en terre rouge" loading="lazy"><figcaption>Sur la terre rouge</figcaption></figure>
+        <figure class="m"><img src="assets/img/sc/equipe-quartier.webp" alt="Des jeunes joueurs et leurs encadrants sur un terrain de quartier" loading="lazy"><figcaption>L’équipe de quartier</figcaption></figure>
+      </div>
+      <div class="wrap">
+        <figure class="m m--video m--cinema">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-match-1.webp" data-src="assets/video/match-1.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Les premiers matchs, sur pelouse naturelle</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 02 · LES VISAGES ===== -->
+    <section class="ch ch--light" id="ch2" data-chap="02" data-nom="Les visages">
+      <div class="wrap ch__head">
+        <span class="ch__num">02</span>
+        <h2 class="display ch__title">Les visages</h2>
+        <p class="ch__text">Derrière chaque maillot, un prénom, une famille, un rêve. Nous prenons le temps de les connaître avant de parler de football.</p>
+      </div>
+      <div class="faces" data-faces>
+        <figure><img src="assets/img/sc/portrait-1.webp" alt="Portrait d’un jeune joueur en maillot jaune" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-6.webp" alt="Portrait d’un jeune joueur en maillot rayé" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-3.webp" alt="Portrait d’un jeune joueur en maillot bleu" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-2.webp" alt="Portrait d’un jeune joueur en maillot jaune" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-10.webp" alt="Portrait d’un jeune joueur en maillot bleu" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-5.webp" alt="Portrait d’un jeune joueur en maillot jaune" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-11.webp" alt="Portrait d’un jeune joueur en maillot bleu" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-7.webp" alt="Portrait d’un jeune joueur en maillot jaune" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-4.webp" alt="Portrait d’un jeune joueur en maillot bleu" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-8.webp" alt="Portrait d’un jeune joueur en maillot jaune" loading="lazy"></figure>
+        <figure><img src="assets/img/sc/portrait-9.webp" alt="Portrait d’un jeune joueur en maillot bleu" loading="lazy"></figure>
+      </div>
+      <div class="wrap">
+        <p class="faces__hint">Faites défiler les portraits →</p>
+      </div>
+    </section>
+
+    <!-- ===== 03 · APPRENDRE ===== -->
+    <section class="ch" id="ch3" data-chap="03" data-nom="Apprendre">
+      <div class="wrap ch__head">
+        <span class="ch__num">03</span>
+        <h2 class="display ch__title">Apprendre</h2>
+        <p class="ch__text">Le talent ne suffit pas. On apprend à lire le jeu, à se placer, à écouter. Le tableau tactique passe de main en main.</p>
+      </div>
+      <div class="wrap split">
+        <figure class="m m--video m--phone">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-tableau-tactique.webp" data-src="assets/video/tableau-tactique.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Au tableau tactique</figcaption>
+        </figure>
+        <div class="split__side">
+          <figure class="m"><img src="assets/img/sc/equipe-rayee.webp" alt="Une équipe en maillots rayés, tableau tactique en main, avec son coach" loading="lazy"><figcaption>Le groupe et son coach</figcaption></figure>
+          <figure class="m m--video">
+            <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-causerie.webp" data-src="assets/video/causerie.mp4"></video>
+            <button class="snd" type="button" aria-label="Activer le son">Son</button>
+            <figcaption>Consignes à la pause</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 04 · LE MATCH ===== -->
+    <section class="ch" id="ch4" data-chap="04" data-nom="Le match">
+      <div class="wrap ch__head">
+        <span class="ch__num">04</span>
+        <h2 class="display ch__title">Le match</h2>
+        <p class="ch__text">Le jour J. Le synthétique, les tribunes, le coup d’envoi. Tout ce qui a été travaillé se joue maintenant.</p>
+      </div>
+      <div class="wrap">
+        <figure class="m m--video m--cinema">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-match-stade.webp" data-src="assets/video/match-stade.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Match au stade</figcaption>
+        </figure>
+      </div>
+      <div class="wrap duo duo--even">
+        <figure class="m m--video">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-match-synthetique.webp" data-src="assets/video/match-synthetique.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Match sur synthétique</figcaption>
+        </figure>
+        <figure class="m m--video">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-compilation-matchs.webp" data-src="assets/video/compilation-matchs.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Compilation de matchs</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 05 · LA PAROLE ===== -->
+    <section class="ch ch--light" id="ch5" data-chap="05" data-nom="La parole">
+      <div class="wrap ch__head">
+        <span class="ch__num">05</span>
+        <h2 class="display ch__title">La parole</h2>
+        <p class="ch__text">Après le match, ce sont eux qui racontent. À la Raising Stars Cup comme en tribune, nous leur donnons le micro. Activez le son.</p>
+      </div>
+      <div class="wrap phones">
+        <figure class="m m--video m--phone">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-raising-stars-1.webp" data-src="assets/video/raising-stars-1.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Raising Stars Cup</figcaption>
+        </figure>
+        <figure class="m m--video m--phone">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-raising-stars-2.webp" data-src="assets/video/raising-stars-2.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Au micro</figcaption>
+        </figure>
+        <figure class="m m--video m--phone m--land">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-interview-tribune.webp" data-src="assets/video/interview-tribune.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Interview en tribune</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 06 · L'ÉMOTION ===== -->
+    <section class="ch" id="ch6" data-chap="06" data-nom="L’émotion">
+      <div class="wrap ch__head">
+        <span class="ch__num">06</span>
+        <h2 class="display ch__title">L’émotion</h2>
+        <p class="ch__text">Les cris, les larmes, la fierté. Gagner ou perdre ensemble, c’est aussi ça, grandir.</p>
+      </div>
+      <div class="wrap split split--rev">
+        <figure class="m m--video m--phone">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-apres-match.webp" data-src="assets/video/apres-match.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Au coup de sifflet final</figcaption>
+        </figure>
+        <div class="split__side">
+          <figure class="m"><img src="assets/img/sc/equipe-tribune.webp" alt="L’équipe et ses encadrants dans les tribunes" loading="lazy"><figcaption>En tribune, tous ensemble</figcaption></figure>
+          <figure class="m"><img src="assets/img/sc/equipe-soir.webp" alt="L’équipe et son coach au coucher du soleil" loading="lazy"><figcaption>Au coucher du soleil</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 07 · ÊTRE VU ===== -->
+    <section class="ch ch--focus" id="ch7" data-chap="07" data-nom="Être vu">
+      <div class="wrap ch__head">
+        <span class="ch__num">07</span>
+        <h2 class="display ch__title">Être vu</h2>
+        <p class="ch__text">Un talent qu’on ne voit pas reste un rêve. Pour chaque joueur suivi, nous montons sa vidéo : ses actions, son poste, ses qualités. C’est elle qui ouvre les portes des clubs.</p>
+      </div>
+      <div class="wrap">
+        <figure class="m m--video m--cinema">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-detection-joueur.webp" data-src="assets/video/detection-joueur.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Aboubacar Kanté — milieu n°8 · vidéo de détection</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 08 · AUTOUR DU TERRAIN ===== -->
+    <section class="ch" id="ch8" data-chap="08" data-nom="Autour du terrain">
+      <div class="wrap ch__head">
+        <span class="ch__num">08</span>
+        <h2 class="display ch__title">Autour du terrain</h2>
+        <p class="ch__text">Les fédérations, les officiels, les grands stades, et la maison mère S-ComPlus : tout un réseau travaille pour que ces jeunes aillent plus loin.</p>
+      </div>
+      <div class="wrap mosaic">
+        <figure class="m mosaic__a"><img src="assets/img/sc/stade-tribune.webp" alt="Encadrants et jeunes supporters en tribune un jour de match" loading="lazy"><figcaption>Jour de match</figcaption></figure>
+        <figure class="m mosaic__b"><img src="assets/img/reel/evenement.webp" alt="Officiels et invités lors d’une journée sportive" loading="lazy"><figcaption>Avec les officiels</figcaption></figure>
+        <figure class="m mosaic__c"><img src="assets/img/reel/femagym.webp" alt="Deux membres de la Fédération malienne de gymnastique" loading="lazy"><figcaption>Avec la FEMAGYM</figcaption></figure>
+        <figure class="m m--video mosaic__d">
+          <video data-auto muted loop playsinline preload="none" poster="assets/img/galerie/v-stade-26-mars.webp" data-src="assets/video/stade-26-mars.mp4"></video>
+          <button class="snd" type="button" aria-label="Activer le son">Son</button>
+          <figcaption>Au Stade du 26 Mars</figcaption>
+        </figure>
+        <figure class="m mosaic__e"><img src="assets/img/reel/bureau-scomplus.webp" alt="Le bureau de S-ComPlus SARL" loading="lazy"><figcaption>S-ComPlus SARL, la maison mère</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ===== LE FIL : publications ajoutées depuis le back-office ===== -->
+    <section class="ch fil" id="fil" data-chap="09" data-nom="Le fil" hidden data-fil>
+      <div class="wrap ch__head">
+        <span class="ch__num">09</span>
+        <h2 class="display ch__title">Le fil</h2>
+        <p class="ch__text">L’histoire continue. Nos dernières photos et vidéos, au fil de la saison.</p>
+      </div>
+      <div class="wrap fil__list" data-fil-list></div>
+      <p class="center"><button type="button" class="btn btn--line" data-fil-plus hidden>Voir plus</button></p>
+    </section>
+
+    <!-- ===== FIN ===== -->
+    <section class="g-end">
+      <div class="wrap">
+        <p class="g-kicker">La suite</p>
+        <h2 class="display g-end__title">La prochaine histoire, c’est peut-être la vôtre.</h2>
+        <div class="btns">
+          <a class="btn btn--light" href="index.html#contact">Nous contacter</a>
+          <a class="btn btn--line" href="index.html">Retour à l’accueil</a>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <!-- Visionneuse plein écran -->
-  <div class="lb" data-lb hidden role="dialog" aria-modal="true" aria-label="Visionneuse">
-    <button type="button" class="lb__close" data-lb-fermer aria-label="Fermer">Fermer</button>
-    <button type="button" class="lb__nav lb__nav--prev" data-lb-prev aria-label="Média précédent">←</button>
-    <figure class="lb__fig">
-      <div class="lb__media" data-lb-media></div>
-      <figcaption class="lb__cap">
-        <span class="lb__meta" data-lb-meta></span>
-        <h2 class="lb__titre" data-lb-titre></h2>
-        <p class="lb__desc" data-lb-desc></p>
-      </figcaption>
-    </figure>
-    <button type="button" class="lb__nav lb__nav--next" data-lb-next aria-label="Média suivant">→</button>
-  </div>
 
   <footer class="footer">
     <img class="footer__logo" src="assets/img/logo/logo-sombre.webp" alt="SC+ Talent & Sports — Sports Management Agency" width="900" height="875" loading="lazy">
