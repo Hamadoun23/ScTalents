@@ -1,7 +1,7 @@
 # Détourage du logo SC+ et déclinaisons
 import numpy as np
 from PIL import Image, ImageFilter
-src = Image.open('WhatsApp Image 2026-10-22 at 13.38.52.jpeg').convert('RGB')
+src = Image.open('assets/images/WhatsApp Image 2026-10-22 at 13.38.52.jpeg').convert('RGB')
 a = np.asarray(src).astype(np.float32)
 H, W, _ = a.shape
 mn, mx = a.min(2), a.max(2)
@@ -63,7 +63,7 @@ def mono(im, couleur):
     x[..., :3] = couleur
     return Image.fromarray(x, 'RGBA')
 
-out = 'site/assets/img/logo/'
+out = 'declinaisons-logo/'   # toutes les déclinaisons (hors site publié)
 bb = logo.getchannel('A').point(lambda v: 255 if v > 10 else 0).getbbox()
 bb = (max(bb[0]-12,0), max(bb[1]-12,0), min(bb[2]+12,W), min(bb[3]+12,H))
 complet = logo.crop(bb)
@@ -121,3 +121,9 @@ og = Image.new('RGBA', (1200, 630), (7, 17, 31, 255))
 l = sombre(complet, prot_complet).copy(); l.thumbnail((560, 560), Image.LANCZOS)
 og.alpha_composite(l, ((1200 - l.width) // 2, (630 - l.height) // 2))
 og.convert('RGB').save('site/assets/img/og.jpg', quality=85)
+
+# seuls ces fichiers sont utilisés par le site publié
+import shutil, os
+os.makedirs('site/assets/img/logo', exist_ok=True)
+for f in ['horizontal-sombre.webp', 'logo-sombre.webp', 'apple-touch-icon.png']:
+    shutil.copy(out + f, 'site/assets/img/logo/' + f)
