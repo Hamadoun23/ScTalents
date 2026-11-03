@@ -1,0 +1,11 @@
+{# Un champ de formulaire : libellé, saisie, aide, erreur #}
+<div class="champ{% if f.errors %} champ--err{% endif %}{% if f.field.widget.input_type == 'checkbox' %} champ--case{% endif %}{% if large %} champ--large{% endif %}">
+  {% if f.field.widget.input_type == 'checkbox' %}
+    <label>{{ f }} <span>{{ f.label }}</span></label>
+  {% else %}
+    <label for="{{ f.id_for_label }}">{{ f.label }}{% if not f.field.required %} <small>(facultatif)</small>{% endif %}</label>
+    {{ f }}
+  {% endif %}
+  {% if f.help_text %}<p class="aide">{{ f.help_text }}</p>{% endif %}
+  {% for e in f.errors %}<p class="erreur">{{ e }}</p>{% endfor %}
+</div>

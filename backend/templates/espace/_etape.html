@@ -1,0 +1,17 @@
+<div class="sous-ligne">
+  {{ f.id }}
+  <div class="grille grille--4">
+    {% include 'espace/_champ.html' with f=f.club %}
+    {% include 'espace/_champ.html' with f=f.niveau %}
+    {% include 'espace/_champ.html' with f=f.pays %}
+    <div class="grille grille--2">
+      {% include 'espace/_champ.html' with f=f.debut %}
+      {% include 'espace/_champ.html' with f=f.fin %}
+    </div>
+  </div>
+  <div class="sous-ligne__bas">
+    {% if f.instance.logo %}<img src="{{ f.instance.logo.url }}" alt="" class="mini-logo">{% endif %}
+    {% include 'espace/_champ.html' with f=f.logo %}
+    {% if f.instance.pk %}<label class="retirer">{{ f.DELETE }} Retirer ce club</label>{% endif %}
+  </div>
+</div>

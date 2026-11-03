@@ -1,0 +1,12 @@
+{% load static %}<li class="ligne{% if not j.publie %} ligne--masquee{% endif %}">
+  <a class="ligne__img" href="{% url 'espace:joueur_modifier' j.pk %}">{% if j.photo %}<img src="{{ j.photo.url }}" alt="">{% else %}<span>{{ j.prenom|first }}{{ j.nom|first }}</span>{% endif %}</a>
+  <div class="ligne__txt">
+    <b>{{ j.prenom }} {{ j.nom }}</b>
+    <small>{{ j.poste_libelle }}{% if j.club %} · {{ j.club }}{% endif %} · {{ j.videos.count }} vidéo{{ j.videos.count|pluralize }}</small>
+    <small class="etiquette {% if j.publie %}etiquette--ok{% endif %}">{% if j.publie %}Visible sur le site{% else %}Masqué{% endif %}</small>
+  </div>
+  <div class="ligne__actions">
+    <a class="btn" href="{% url 'espace:joueur_modifier' j.pk %}">Modifier</a>
+    <a class="btn btn--clair" href="{{ j.get_absolute_url }}" target="_blank">Voir</a>
+  </div>
+</li>

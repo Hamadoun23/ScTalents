@@ -1,0 +1,17 @@
+{% extends 'espace/base.html' %}
+{% block titre %}Vidéos{% endblock %}
+{% block contenu %}
+<div class="entete">
+  <h1>Vidéos</h1>
+  <a class="btn btn--grand" href="{% url 'espace:video_nouvelle' %}">▶ Ajouter une vidéo</a>
+</div>
+<nav class="filtres">
+  <a class="chip{% if not categorie %} on{% endif %}" href="{% url 'espace:videos' %}">Toutes</a>
+  {% for k, l in categories %}<a class="chip{% if categorie == k %} on{% endif %}" href="?categorie={{ k }}">{{ l }}</a>{% endfor %}
+</nav>
+{% if videos %}
+<ul class="liste">{% for v in videos %}{% include 'espace/_ligne_video.html' %}{% endfor %}</ul>
+{% else %}
+<p class="vide">Aucune vidéo ici pour le moment.</p>
+{% endif %}
+{% endblock %}

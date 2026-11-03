@@ -1,0 +1,165 @@
+{% extends 'base.html' %}{% load static %}
+{% block styles %}<link rel="preload" as="image" href="{% static 'img/sc/equipe-rayee.webp' %}">{% endblock %}
+{% block contenu %}
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="accueil" aria-label="Présentation">
+  <div class="hero__slides" aria-hidden="true">
+    <picture class="hero__slide is-active">
+      <source media="(max-width: 899px)" srcset="{% static 'img/sc/equipe-rayee-m.webp' %}">
+      <img src="{% static 'img/sc/equipe-rayee.webp' %}" alt="" fetchpriority="high">
+    </picture>
+    <picture class="hero__slide" data-lazy>
+      <source media="(max-width: 899px)" data-srcset="{% static 'img/sc/equipe-tribune-m.webp' %}">
+      <img data-src="{% static 'img/sc/equipe-tribune.webp' %}" alt="">
+    </picture>
+    <picture class="hero__slide" data-lazy>
+      <img data-src="{% static 'img/sc/stade-tribune.webp' %}" alt="">
+    </picture>
+  </div>
+  <div class="hero__shade"></div>
+  <div class="wrap hero__content">
+    <h1 class="display hero__title">
+      <span class="line"><span style="--i:0">Révéler</span> <span style="--i:1">les</span> <span style="--i:2">talents,</span></span>
+      <span class="line"><span style="--i:3">bâtir</span> <span style="--i:4">les</span> <span style="--i:5">champions.</span></span>
+    </h1>
+    <div class="hero__side hero__in">
+      <p class="small">Nous détectons, formons et accompagnons les jeunes talents du Mali, du terrain de quartier jusqu’au haut niveau.</p>
+      <a class="btn btn--light" href="{% url 'joueurs' %}">Découvrir nos joueurs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BANDEAU : disciplines ===== -->
+<div class="marquee" aria-label="Disciplines accompagnées">
+  <div class="marquee__track">
+    <span><img src="{% static 'img/sport-football.webp' %}" alt="" width="128" height="128">Football</span>
+    <span><img src="{% static 'img/sport-basketball.webp' %}" alt="" width="128" height="128">Basketball</span>
+    <span><img src="{% static 'img/sport-gymnastique.webp' %}" alt="" width="128" height="128">Gymnastique</span>
+    <span><img src="{% static 'img/sport-athletisme.webp' %}" alt="" width="128" height="128">Athlétisme</span>
+    <span><img src="{% static 'img/sport-arts-martiaux.webp' %}" alt="" width="128" height="128">Arts martiaux</span>
+    <span><img src="{% static 'img/sport-sports-aquatiques.webp' %}" alt="" width="128" height="128">Sports aquatiques</span>
+    <span><img src="{% static 'img/sport-autres.webp' %}" alt="" width="128" height="128">Autres sports</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-football.webp' %}" alt="" width="128" height="128">Football</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-basketball.webp' %}" alt="" width="128" height="128">Basketball</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-gymnastique.webp' %}" alt="" width="128" height="128">Gymnastique</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-athletisme.webp' %}" alt="" width="128" height="128">Athlétisme</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-arts-martiaux.webp' %}" alt="" width="128" height="128">Arts martiaux</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-sports-aquatiques.webp' %}" alt="" width="128" height="128">Sports aquatiques</span>
+    <span aria-hidden="true"><img src="{% static 'img/sport-autres.webp' %}" alt="" width="128" height="128">Autres sports</span>
+  </div>
+</div>
+
+<!-- ===== MANIFESTE ===== -->
+<section class="statement" id="agence">
+  <img class="statement__bg" src="{% static 'img/sc/duo.webp' %}" alt="" loading="lazy">
+  <div class="wrap statement__inner">
+    <p class="display statement__text" data-reveal>
+      Un rêve. Un terrain. Une blessure. Et plus personne autour. Combien de talents se perdent ainsi&nbsp;? Chez SC+, aucun talent ne marche seul.
+    </p>
+    <a class="btn btn--light reveal" href="#contact">Démarrer la conversation</a>
+  </div>
+</section>
+
+<!-- ===== NOS JOUEURS ===== -->
+{% if joueurs %}
+<section class="sec" id="joueurs">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="display sec__title" data-blur>Nos joueurs</h2>
+      <p class="small">Chaque joueur a son CV et sa vidéo. Clubs et recruteurs : tout est là pour vous faire une idée.</p>
+    </div>
+    <div class="pgrid">{% for j in joueurs %}{% include '_carte_joueur.html' %}{% endfor %}</div>
+    <p class="center sec__more"><a class="btn btn--light" href="{% url 'joueurs' %}">Voir tous les joueurs</a></p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ===== SERVICES ===== -->
+<section class="services light" id="services">
+  <div class="wrap">
+    <h2 class="display services__title" data-blur>L’exigence du haut niveau. L’âme du Mali.</h2>
+    <p class="small services__intro">Un accompagnement sur mesure pour chaque profil : sportifs, clubs, fédérations, sponsors et partenaires.</p>
+    <ul class="cards">
+      <li class="card">
+        <img class="haut" src="{% static 'img/sc/duo.webp' %}" alt="" loading="lazy">
+        <div class="card__body"><h3>Pour les jeunes talents</h3>
+          <ul><li>Détection et promotion des jeunes talents</li><li>Formation, suivi et accompagnement</li><li>CV et vidéo de présentation pour les clubs</li></ul></div>
+      </li>
+      <li class="card">
+        <img src="{% static 'img/sc/equipe-rayee.webp' %}" alt="" loading="lazy">
+        <div class="card__body"><h3>Pour les clubs &amp; fédérations</h3>
+          <ul><li>Conseil aux clubs, académies et fédérations</li><li>Organisation de compétitions et d’événements</li><li>Accès aux profils de nos joueurs</li></ul></div>
+      </li>
+      <li class="card">
+        <img src="{% static 'img/reel/bureau-scomplus.webp' %}" alt="" loading="lazy">
+        <div class="card__body"><h3>Pour les sponsors &amp; partenaires</h3>
+          <ul><li>Recherche de clubs, sponsors et partenaires</li><li>Dossiers de partenariat et négociation</li><li>Partenariats nationaux et internationaux</li></ul></div>
+      </li>
+    </ul>
+    <p class="center"><a class="btn btn--dark" href="#contact">Démarrons ensemble</a></p>
+  </div>
+</section>
+
+<!-- ===== VIDÉOS ===== -->
+{% if videos %}
+<section class="sec" id="videos">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="display sec__title" data-blur>Sur le terrain</h2>
+      <p class="small">Matchs, entraînements, interviews : nos jeunes en images. Les vidéos se lancent toutes seules, sans le son.</p>
+    </div>
+    <div class="vgrid">{% for v in videos %}{% include '_video.html' with montrer_joueur=True %}{% endfor %}</div>
+    <p class="center sec__more"><a class="btn btn--light" href="{% url 'videos' %}">Toutes les vidéos</a></p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ===== PRÊT À JOUER ===== -->
+<section class="ready">
+  <div class="ready__img"><img src="{% static 'img/reel/stade-26-mars.webp' %}" alt="" loading="lazy"></div>
+  <div class="ready__panel">
+    <h2 class="display ready__title" data-blur>Prêt à jouer au plus haut niveau&nbsp;?</h2>
+    <a class="btn btn--dark" href="#contact">Démarrer la conversation</a>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 class="display contact__title" data-blur>Donnons vie à votre projet</h2>
+    {% for m in messages %}<p class="form__msg {% if m.level_tag == 'success' %}ok{% else %}err{% endif %} center">{{ m }}</p>{% endfor %}
+    <form class="form" method="post" action="{% url 'contact' %}" data-contact novalidate>
+      {% csrf_token %}
+      <label>Nom<input name="nom" required maxlength="120" autocomplete="name"></label>
+      <label>Profil
+        <select name="profil">
+          <option value="sportif">Sportif</option><option value="parent">Parent</option>
+          <option value="club">Club / académie</option><option value="sponsor">Sponsor / entreprise</option>
+          <option value="autre">Autre</option>
+        </select>
+      </label>
+      <label>E-mail<input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+      <label>Téléphone<input name="telephone" type="tel" maxlength="40" autocomplete="tel"></label>
+      <label class="form__full">Message<textarea name="message" rows="4" required maxlength="3000"></textarea></label>
+      <label class="form__check form__full"><input type="checkbox" name="accord" required> J’accepte que SC+ Talent &amp; Sports me recontacte.</label>
+      <button class="btn btn--light form__full" type="submit">Envoyer</button>
+      <p class="form__msg form__full" data-form-msg role="status"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq light" id="faq">
+  <div class="wrap faq__inner">
+    <h2 class="display faq__title">FAQ</h2>
+    <div class="faq__list">
+      <details><summary>Avec qui travaillez-vous&nbsp;?</summary><p>Sportifs amateurs et professionnels, jeunes talents, entraîneurs, clubs, académies, fédérations, organisateurs d’événements, sponsors, institutions et investisseurs.</p></details>
+      <details><summary>Je suis un club : comment recruter un de vos joueurs&nbsp;?</summary><p>Consultez son CV et sa vidéo dans la page Joueurs, puis écrivez-nous avec le formulaire ci-dessus. Nous vous mettons en relation.</p></details>
+      <details><summary>Accompagnez-vous les jeunes talents&nbsp;?</summary><p>Oui. La détection, la formation et le suivi des jeunes sportifs sont au cœur de notre mission, avec un cadre structuré pour progresser.</p></details>
+      <details><summary>Organisez-vous des compétitions et des événements&nbsp;?</summary><p>Oui : championnats, tournois, stages, rencontres professionnelles et cérémonies sportives.</p></details>
+      <details><summary>Qui est derrière SC+ Talent &amp; Sports&nbsp;?</summary><p>SC+ Talent &amp; Sports est une filiale de S-ComPlus SARL, basée à Bamako, au Mali.</p></details>
+    </div>
+  </div>
+</section>
+{% endblock %}

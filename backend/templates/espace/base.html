@@ -1,0 +1,38 @@
+{% load static %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% block titre %}Espace admin{% endblock %} — SC+ Talent &amp; Sports</title>
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/espace.css' %}">
+  <script src="{% static 'js/espace.js' %}" defer></script>
+</head>
+<body>
+  {% if user.is_authenticated %}
+  <header class="top">
+    <a class="top__logo" href="{% url 'espace:tableau' %}"><img src="{% static 'img/logo/horizontal-sombre.webp' %}" alt="SC+ Talent & Sports" width="855" height="160"></a>
+    <nav class="top__nav">
+      {% url 'espace:tableau' as u0 %}{% url 'espace:joueurs' as u1 %}{% url 'espace:videos' as u2 %}{% url 'espace:messages' as u3 %}
+      <a href="{{ u0 }}"{% if request.path == u0 %} class="on"{% endif %}>Accueil</a>
+      <a href="{{ u1 }}"{% if u1 in request.path %} class="on"{% endif %}>Joueurs</a>
+      <a href="{{ u2 }}"{% if u2 in request.path %} class="on"{% endif %}>Vidéos</a>
+      <a href="{{ u3 }}"{% if u3 in request.path %} class="on"{% endif %}>Messages</a>
+    </nav>
+    <div class="top__user">
+      <a href="{% url 'accueil' %}" target="_blank">Voir le site ↗</a>
+      <form method="post" action="{% url 'espace:deconnexion' %}">{% csrf_token %}<button class="lien" type="submit">Se déconnecter</button></form>
+    </div>
+  </header>
+  {% endif %}
+
+  <main class="wrap">
+    {% for m in messages %}<div class="alerte alerte--{{ m.level_tag }}" role="status">{{ m }}</div>{% endfor %}
+    {% block contenu %}{% endblock %}
+  </main>
+</body>
+</html>

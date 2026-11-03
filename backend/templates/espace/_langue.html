@@ -1,0 +1,8 @@
+<div class="sous-ligne sous-ligne--fine">
+  {{ f.id }}
+  <div class="grille grille--3">
+    {% include 'espace/_champ.html' with f=f.langue %}
+    {% include 'espace/_champ.html' with f=f.niveau %}
+    {% if f.instance.pk %}<label class="retirer">{{ f.DELETE }} Retirer</label>{% endif %}
+  </div>
+</div>

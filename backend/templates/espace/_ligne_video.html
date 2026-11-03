@@ -1,0 +1,14 @@
+<li class="ligne{% if not v.publie %} ligne--masquee{% endif %}">
+  <a class="ligne__img ligne__img--video" href="{% url 'espace:video_modifier' v.pk %}">{% if v.apercu %}<img src="{{ v.apercu }}" alt="">{% else %}<span>▶</span>{% endif %}</a>
+  <div class="ligne__txt">
+    <b>{{ v.titre }}</b>
+    <small>{{ v.get_categorie_display }}{% if v.joueur %} · {{ v.joueur }}{% endif %}{% if v.youtube %} · YouTube{% endif %}</small>
+    {% if v.etat == 'en_cours' %}<small class="etiquette etiquette--attente">⏳ En préparation… (quelques minutes)</small>
+    {% elif v.etat == 'erreur' %}<small class="etiquette etiquette--erreur">Problème avec ce fichier : essayez un autre format</small>
+    {% else %}<small class="etiquette {% if v.publie %}etiquette--ok{% endif %}">{% if v.publie %}Visible sur le site{% else %}Masquée{% endif %}{% if v.a_la_une %} · À la une{% endif %}</small>{% endif %}
+  </div>
+  <div class="ligne__actions">
+    <a class="btn" href="{% url 'espace:video_modifier' v.pk %}">Modifier</a>
+    <form method="post" action="{% url 'espace:basculer' 'video' v.pk %}">{% csrf_token %}<input type="hidden" name="suivant" value="{{ request.get_full_path }}"><button class="btn btn--clair" type="submit">{% if v.publie %}Masquer{% else %}Afficher{% endif %}</button></form>
+  </div>
+</li>

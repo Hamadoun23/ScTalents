@@ -1,0 +1,14 @@
+{# Une vidéo : fichier lu automatiquement à l'écran (muet), ou YouTube lu au clic #}
+<figure class="m m--video vcard">
+  {% if v.fichier %}
+    <video data-auto muted loop playsinline preload="none"{% if v.apercu %} poster="{{ v.apercu }}"{% endif %} data-src="{{ v.fichier.url }}"></video>
+    <button class="snd" type="button" aria-label="Activer le son">Son</button>
+  {% elif v.youtube_id %}
+    <button class="yt" type="button" data-yt="{{ v.youtube_id }}" aria-label="Lire la vidéo « {{ v.titre }} »"><img src="{{ v.apercu }}" alt="" loading="lazy"></button>
+  {% endif %}
+  <figcaption>
+    <b>{{ v.titre }}</b>
+    {% if v.description %}<span>{{ v.description }}</span>{% endif %}
+    {% if montrer_joueur and v.joueur %}<a href="{{ v.joueur.get_absolute_url }}">Voir le CV de {{ v.joueur }} →</a>{% endif %}
+  </figcaption>
+</figure>

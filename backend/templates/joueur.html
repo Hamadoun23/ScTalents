@@ -1,0 +1,137 @@
+{% extends 'base.html' %}{% load static %}
+{% block titre %}{{ j }} — {{ j.poste_libelle }} · SC+ Talent &amp; Sports{% endblock %}
+{% block description %}CV de {{ j }}, {{ j.poste_libelle }}{% if j.age %}, {{ j.age }} ans{% endif %}{% if j.club %}, {{ j.club }}{% endif %}. Joueur accompagné par SC+ Talent & Sports.{% endblock %}
+{% block og_titre %}{{ j }} — {{ j.poste_libelle }}{% endblock %}
+{% block og_image %}{% if j.photo %}{{ request.scheme }}://{{ request.get_host }}{{ j.photo.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block body_class %}page page--cv{% endblock %}
+{% block contenu %}
+<article class="cv">
+  <div class="wrap">
+    <p class="cv__retour no-print"><a href="{% url 'joueurs' %}">← Tous les joueurs</a></p>
+
+    <!-- En-tête du CV -->
+    <header class="cv__head">
+      <div class="cv__photo">{% if j.photo %}<img src="{{ j.photo.url }}" alt="Photo de {{ j }}">{% endif %}</div>
+      <div class="cv__id">
+        <span class="cv__tag">Fiche joueur</span>
+        <h1 class="display cv__nom">{{ j.prenom }} {{ j.nom }}</h1>
+        <p class="cv__postes"><b>{{ j.poste_libelle }}</b>{% if j.poste_2 %} · {{ j.poste_2_libelle }}{% endif %}</p>
+        <p class="cv__meta">{{ j.nationalite }}{% if j.age %} · {{ j.age }} ans{% endif %}{% if j.residence %} · Résidence : {{ j.residence }}{% endif %}</p>
+      </div>
+      <div class="cv__qr" aria-hidden="true">{{ qr|safe }}<small>Fiche en ligne</small></div>
+    </header>
+
+    <dl class="cv__stats">
+      <div><dt>Taille</dt><dd>{% if j.taille %}{{ j.taille }} cm{% else %}—{% endif %}</dd></div>
+      <div><dt>Poids</dt><dd>{% if j.poids %}{{ j.poids }} kg{% else %}—{% endif %}</dd></div>
+      <div><dt>Pied fort</dt><dd>{{ j.get_pied_display|default:"—" }}</dd></div>
+      <div><dt>Passeport UE</dt><dd>{{ j.passeport_ue|yesno:"Oui,Non" }}</dd></div>
+    </dl>
+
+    {% if j.club %}
+    <section class="cv__club">
+      {% if j.club_logo %}<img src="{{ j.club_logo.url }}" alt="Logo {{ j.club }}">{% endif %}
+      <div>
+        <span class="cv__label">Club actuel</span>
+        <b>{{ j.club }}</b>
+        <span>{% if j.club_niveau %}{{ j.club_niveau }}{% endif %}{% if j.club_pays %} · {{ j.club_pays }}{% endif %}{% if j.club_depuis %} · depuis {{ j.club_depuis }}{% endif %}</span>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="cv__grid">
+      <!-- Postes sur le terrain -->
+      <section class="cv__bloc">
+        <h2 class="cv__h2">Postes</h2>
+        <div class="cv__postes-box">
+          <svg class="terrain" viewBox="0 0 100 140" aria-hidden="true">
+            <rect x="2" y="2" width="96" height="136" rx="3"/>
+            <line x1="2" y1="70" x2="98" y2="70"/><circle cx="50" cy="70" r="11"/>
+            <rect x="26" y="2" width="48" height="20"/><rect x="38" y="2" width="24" height="8"/>
+            <rect x="26" y="118" width="48" height="20"/><rect x="38" y="130" width="24" height="8"/>
+            {% for p in j.points_terrain %}
+              <g class="pt pt--{{ p.n }}"><circle cx="{{ p.x }}" cy="{% widthratio p.y 100 140 %}" r="6"/><text x="{{ p.x }}" y="{% widthratio p.y 100 140 %}">{{ p.n }}</text></g>
+            {% endfor %}
+          </svg>
+          <ol class="cv__liste-postes">
+            <li><span>01</span><div><small>Poste principal</small><b>{{ j.poste_libelle }}</b></div></li>
+            {% if j.poste_2 %}<li><span>02</span><div><small>Poste secondaire</small><b>{{ j.poste_2_libelle }}</b></div></li>{% endif %}
+          </ol>
+        </div>
+      </section>
+
+      <!-- Données -->
+      <section class="cv__bloc">
+        <h2 class="cv__h2">Informations</h2>
+        <dl class="cv__infos">
+          <div><dt>Nationalité</dt><dd>{{ j.nationalite }}</dd></div>
+          {% if j.residence %}<div><dt>Résidence</dt><dd>{{ j.residence }}</dd></div>{% endif %}
+          {% if j.date_naissance %}<div><dt>Né le</dt><dd>{{ j.date_naissance|date:"j F Y" }}</dd></div>{% endif %}
+          {% if pays %}<div><dt>Pays où il a joué</dt><dd>{{ pays|join:", " }}</dd></div>{% endif %}
+          {% if niveaux %}<div><dt>Compétitions</dt><dd>{{ niveaux|join:", " }}</dd></div>{% endif %}
+        </dl>
+        {% if j.langues.all %}
+        <h2 class="cv__h2">Langues</h2>
+        <ul class="cv__langues">{% for l in j.langues.all %}<li><b>{{ l.langue }}</b><span>{{ l.get_niveau_display }}</span></li>{% endfor %}</ul>
+        {% endif %}
+      </section>
+    </div>
+
+    {% if j.presentation %}
+    <section class="cv__bloc">
+      <h2 class="cv__h2">Présentation</h2>
+      <p class="cv__texte">{{ j.presentation|linebreaksbr }}</p>
+    </section>
+    {% endif %}
+
+    {% if j.carriere.all %}
+    <section class="cv__bloc">
+      <h2 class="cv__h2">Carrière</h2>
+      <ol class="cv__carriere">
+        {% for e in j.carriere.all %}
+        <li>
+          <span class="cv__logo">{% if e.logo %}<img src="{{ e.logo.url }}" alt="" loading="lazy">{% endif %}</span>
+          <div>
+            <b>{{ e.club }}</b>
+            <span>{{ e.niveau }}{% if e.niveau and e.pays %} · {% endif %}{{ e.pays }}</span>
+            <small>{{ e.debut }}{% if e.debut %} — {% endif %}{{ e.fin|default:"aujourd’hui" }}</small>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+
+    {% if videos %}
+    <section class="cv__bloc no-print">
+      <h2 class="cv__h2">Vidéos</h2>
+      <div class="vgrid">{% for v in videos %}{% include '_video.html' %}{% endfor %}</div>
+    </section>
+    <section class="cv__bloc print-only">
+      <h2 class="cv__h2">Vidéos</h2>
+      <p>À voir sur la fiche en ligne : {{ request.build_absolute_uri }}</p>
+    </section>
+    {% endif %}
+
+    <section class="cv__contact">
+      <div>
+        <h2 class="cv__h2">Contact</h2>
+        {% if j.contacts_publics %}
+          <ul class="cv__infos-contact">
+            {% if j.email %}<li>E-mail : <a href="mailto:{{ j.email }}">{{ j.email }}</a></li>{% endif %}
+            {% if j.telephone %}<li>Téléphone : {{ j.telephone }}</li>{% endif %}
+            {% if j.instagram %}<li>Instagram : {{ j.instagram }}</li>{% endif %}
+            {% if j.facebook %}<li>Facebook : {{ j.facebook }}</li>{% endif %}
+          </ul>
+        {% else %}
+          <p>Ce joueur est représenté par <b>SC+ Talent &amp; Sports</b>. Pour toute demande (essai, recrutement, informations), contactez l’agence.</p>
+        {% endif %}
+      </div>
+      <div class="cv__actions no-print">
+        <a class="btn btn--light" href="{% url 'accueil' %}#contact">Contacter l’agence</a>
+        <button class="btn btn--line" type="button" onclick="window.print()">Imprimer / PDF</button>
+      </div>
+    </section>
+  </div>
+</article>
+{% endblock %}

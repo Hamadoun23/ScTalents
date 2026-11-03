@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block titre %}Nos joueurs — SC+ Talent &amp; Sports{% endblock %}
+{% block description %}Les joueurs accompagnés par SC+ Talent & Sports : CV, poste, carrière et vidéo de chacun.{% endblock %}
+{% block body_class %}page{% endblock %}
+{% block contenu %}
+<section class="sec sec--top">
+  <div class="wrap">
+    <div class="sec__head">
+      <h1 class="display sec__title">Nos joueurs</h1>
+      <p class="small">Chaque fiche réunit le CV du joueur, son parcours et ses vidéos. Pour en savoir plus sur un joueur, contactez l’agence.</p>
+    </div>
+    {% if postes|length > 1 %}
+    <nav class="chips" aria-label="Filtrer par poste">
+      <a class="chip{% if not poste %} is-on{% endif %}" href="{% url 'joueurs' %}">Tous</a>
+      {% for k, l in postes %}<a class="chip{% if poste == k %} is-on{% endif %}" href="?poste={{ k }}">{{ l }}</a>{% endfor %}
+    </nav>
+    {% endif %}
+    {% if joueurs %}
+      <div class="pgrid">{% for j in joueurs %}{% include '_carte_joueur.html' %}{% endfor %}</div>
+    {% else %}
+      <p class="vide">Aucun joueur à afficher pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

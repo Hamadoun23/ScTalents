@@ -1,48 +1,51 @@
 # CLAUDE.md — SC+ Talent & Sports
 
-Site vitrine + back-office médias pour SC+ Talent & Sports (agence de management sportif, Mali,
-filiale de S-ComPlus SARL). Le cahier des charges complet est dans `CAHIER_DES_CHARGES.md` :
-lis-le avant de coder. Le schéma de base est dans `supabase/schema.sql`.
+Site + espace admin de SC+ Talent & Sports (agence de management sportif, Mali, filiale de
+S-ComPlus SARL). Depuis novembre 2026 : application **Django** (plus de site statique ni de Supabase).
 
-## Règles techniques (à respecter strictement)
+## Principe n°1 : simple
 
-- HTML + CSS + JavaScript pur. **Aucun framework, aucun build, aucun npm.**
-- JS en modules ES (`<script type="module">`).
-- Supabase via CDN : `import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'`
-- Les clés sont dans `site/js/config.js` (SUPABASE_URL, SUPABASE_ANON_KEY). Ne jamais utiliser la clé `service_role`.
-- Le client Supabase est créé une seule fois dans `site/js/supabase.js` et importé ailleurs.
-- Tout le site déployable est dans `site/`.
-- Textes du site en **français**.
-- Mobile d'abord. Variables CSS pour les couleurs (voir charte §6 du cahier des charges).
-- Images : toujours compressées côté navigateur avant upload (`site/js/compress.js`) :
-  WebP qualité 0.8, 1600 px max + miniature 480 px. Garder JPEG si WebP indisponible.
-- Vidéos : YouTube par défaut (extraire l'ID, miniature `https://img.youtube.com/vi/ID/hqdefault.jpg`,
-  lecture via `https://www.youtube-nocookie.com/embed/ID` seulement au clic). MP4 ≤ 50 Mo en option.
-- Toutes les images publiques en `loading="lazy"` avec un `alt`.
-- Insérer du texte venant de la base avec `textContent` (jamais `innerHTML` avec des données utilisateur).
-- Garder le code court et lisible, commenté en français aux endroits clés.
+Les personnes qui gèrent le site ne sont pas techniciennes. L'espace admin (`/espace/`) doit rester :
+grandes tuiles, formulaires en français courant, un message de confirmation après chaque action,
+aucune notion technique visible (pas de noms de fichiers, pas de jargon). L'admin Django brute
+(`/gestion-technique/`) est réservée au technicien.
 
-## Arborescence cible
+## Arborescence
 
 ```
-site/
-  index.html            accueil (une page, sections)
-  galerie.html          galerie complète
-  admin/login.html      connexion
-  admin/index.html      back-office (onglets Médias / Messages)
-  css/style.css         styles publics
-  css/admin.css         styles admin
-  js/config.js          clés Supabase
-  js/supabase.js        client partagé
-  js/main.js            menu mobile, aperçu galerie, formulaire de contact
-  js/galerie.js         filtres, pagination, visionneuse
-  js/admin.js           auth guard, upload, liste, messages
-  js/compress.js        compression d'images
-  assets/img/           logo et visuels
-supabase/schema.sql
+backend/                  application Django (racine = dossier du code sur le serveur)
+  config/                 réglages (variables d'environnement en production)
+  core/models.py          Joueur (CV), EtapeCarriere, Langue, Video, Message
+  core/views.py           pages publiques : accueil, joueurs, fiche CV, vidéos, contact
+  core/espace.py          espace admin simplifié (+ urls_espace.py)
+  core/medias.py          allègement : images → WebP, vidéos → ffmpeg 640 px en tâche de fond
+  core/management/commands/donnees_depart.py   joueur modèle + vidéos de départ
+  templates/              pages publiques ; templates/espace/ pour l'admin
+  static/                 css (style.css, pages.css, espace.css), js, img
+  donnees_depart/         vidéos, miniatures, photo et logos du joueur modèle
+deploy/                   service systemd, vhost nginx, deployer.sh
+assets/                   fichiers bruts du client (non versionnés)
+declinaisons-logo/        toutes les déclinaisons du logo (outils/logo.py)
 ```
 
-## Tester en local
+## Règles
 
-Les modules ES ne marchent pas en `file://`. Lancer un petit serveur dans `site/` :
-`npx serve site` (ou `python -m http.server 8000` dans `site/`), puis ouvrir http://localhost:3000 (ou :8000).
+- Textes en **français**. Mobile d'abord. Design : anthracite / gris clair / blanc, titres Archivo élargis (voir style.css).
+- Données sensibles : contacts des joueurs privés par défaut (`contacts_publics`).
+- Toute image envoyée passe par `alleger_image`, toute vidéo par `preparer_video`.
+- Pas de Docker. SQLite + fichiers dans un seul dossier de données (`DATA_DIR`).
+
+## Local
+
+```
+cd backend
+.venv/Scripts/python manage.py migrate
+.venv/Scripts/python manage.py donnees_depart
+.venv/Scripts/python manage.py runserver 127.0.0.1:8095
+```
+
+## Production
+
+VPS 169.58.85.222 (alias SSH `dilitech-vps`), `/opt/sctalents` (app, venv, donnees, .env),
+service `sctalents` (gunicorn 127.0.0.1:8240), vhost `/etc/nginx/sites-available/sctalents.conf`.
+Mise à jour : voir l'en-tête de `deploy/deployer.sh`.

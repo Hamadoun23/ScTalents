@@ -1,0 +1,29 @@
+{% extends 'espace/base.html' %}
+{% block titre %}Messages{% endblock %}
+{% block contenu %}
+<h1>Messages reçus</h1>
+<p class="intro">Les messages envoyés depuis le formulaire de contact du site.</p>
+{% if liste %}
+<ul class="messages">
+  {% for m in liste %}
+  <li class="{% if not m.lu %}non-lu{% endif %}">
+    <div class="msg-tete">
+      <b>{{ m.nom }}</b><span class="etiquette">{{ m.get_profil_display }}</span>
+      {% if not m.lu %}<span class="etiquette etiquette--nouveau">Nouveau</span>{% endif %}
+      <time>{{ m.cree_le|date:"j F Y à H:i" }}</time>
+    </div>
+    <p class="msg-texte">{{ m.message|linebreaksbr }}</p>
+    <div class="msg-actions">
+      <a class="btn" href="mailto:{{ m.email }}">Répondre par e-mail</a>
+      {% if m.telephone %}<a class="btn btn--clair" href="tel:{{ m.telephone }}">Appeler {{ m.telephone }}</a>
+      <a class="btn btn--clair" href="https://wa.me/{{ m.telephone|cut:' '|cut:'+'|cut:'-' }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+      <form method="post" action="{% url 'espace:message_action' m.pk 'lu' %}">{% csrf_token %}<button class="lien" type="submit">{% if m.lu %}Marquer non lu{% else %}Marquer comme lu{% endif %}</button></form>
+      <form method="post" action="{% url 'espace:message_action' m.pk 'supprimer' %}" data-confirmer="Supprimer ce message ?">{% csrf_token %}<button class="lien danger" type="submit">Supprimer</button></form>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="vide">Aucun message pour le moment.</p>
+{% endif %}
+{% endblock %}

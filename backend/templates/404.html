@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block titre %}Page introuvable — SC+ Talent &amp; Sports{% endblock %}
+{% block body_class %}page{% endblock %}
+{% block contenu %}
+<section class="sec sec--top"><div class="wrap">
+  <h1 class="display sec__title">Page introuvable</h1>
+  <p class="small">Cette page n’existe pas ou n’est plus en ligne.</p>
+  <p><a class="btn btn--light" href="{% url 'accueil' %}">Retour à l’accueil</a></p>
+</div></section>
+{% endblock %}

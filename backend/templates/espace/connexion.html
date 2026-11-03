@@ -1,0 +1,18 @@
+{% extends 'espace/base.html' %}{% load static %}
+{% block titre %}Connexion{% endblock %}
+{% block contenu %}
+<div class="connexion">
+  <img src="{% static 'img/logo/logo-sombre.webp' %}" alt="SC+ Talent & Sports" width="200" height="194">
+  <h1>Espace admin</h1>
+  <p>Connectez-vous pour modifier les joueurs et les vidéos du site.</p>
+  <form method="post" class="bloc">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alerte alerte--error">Identifiant ou mot de passe incorrect.</div>{% endif %}
+    <div class="champ"><label for="id_username">Identifiant</label><input id="id_username" name="username" required autofocus autocomplete="username" autocapitalize="none" value="{{ form.username.value|default:'' }}"></div>
+    <div class="champ"><label for="id_password">Mot de passe</label><input id="id_password" type="password" name="password" required autocomplete="current-password"></div>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn btn--grand" type="submit">Se connecter</button>
+  </form>
+  <a class="lien" href="{% url 'accueil' %}">← Retour au site</a>
+</div>
+{% endblock %}

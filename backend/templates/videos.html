@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block titre %}Vidéos — SC+ Talent &amp; Sports{% endblock %}
+{% block description %}Les vidéos de SC+ Talent & Sports : l’agence, l’équipe, les matchs et nos joueurs.{% endblock %}
+{% block body_class %}page{% endblock %}
+{% block contenu %}
+<section class="sec sec--top">
+  <div class="wrap">
+    <div class="sec__head">
+      <h1 class="display sec__title">Vidéos</h1>
+      <p class="small">L’agence, l’équipe, les matchs et nos joueurs. Les vidéos se lancent toutes seules quand vous arrivez dessus ; touchez « Son » pour écouter.</p>
+    </div>
+    {% if sections|length > 1 %}
+    <nav class="chips" aria-label="Aller à">
+      {% for s in sections %}<a class="chip" href="#{{ s.cle }}">{{ s.titre }}</a>{% endfor %}
+    </nav>
+    {% endif %}
+  </div>
+</section>
+
+{% for s in sections %}
+<section class="sec vsec" id="{{ s.cle }}">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="display sec__title sec__title--m">{{ s.titre }}</h2>
+      <p class="small">{{ s.texte }}</p>
+    </div>
+    <div class="vgrid">{% for v in s.videos %}{% include '_video.html' with montrer_joueur=True %}{% endfor %}</div>
+  </div>
+</section>
+{% empty %}
+<section class="sec"><div class="wrap"><p class="vide">Les premières vidéos arrivent bientôt.</p></div></section>
+{% endfor %}
+{% endblock %}

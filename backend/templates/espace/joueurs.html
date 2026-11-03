@@ -1,0 +1,17 @@
+{% extends 'espace/base.html' %}
+{% block titre %}Joueurs{% endblock %}
+{% block contenu %}
+<div class="entete">
+  <h1>Joueurs</h1>
+  <a class="btn btn--grand" href="{% url 'espace:joueur_nouveau' %}">＋ Ajouter un joueur</a>
+</div>
+<form class="recherche" method="get">
+  <input name="q" value="{{ q }}" placeholder="Chercher un joueur par son nom…" aria-label="Chercher un joueur">
+  <button class="btn btn--clair" type="submit">Chercher</button>
+</form>
+{% if joueurs %}
+<ul class="liste">{% for j in joueurs %}{% include 'espace/_ligne_joueur.html' %}{% endfor %}</ul>
+{% else %}
+<p class="vide">{% if q %}Aucun joueur ne correspond à « {{ q }} ».{% else %}Aucun joueur pour le moment. Cliquez sur « Ajouter un joueur » pour créer le premier CV.{% endif %}</p>
+{% endif %}
+{% endblock %}

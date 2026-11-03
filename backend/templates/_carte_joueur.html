@@ -1,0 +1,11 @@
+{% load static %}<a class="pcard" href="{{ j.get_absolute_url }}">
+  <span class="pcard__img">
+    {% if j.photo %}<img src="{{ j.photo.url }}" alt="{{ j }}" loading="lazy">{% else %}<img src="{% static 'img/logo/logo-sombre.webp' %}" alt="" class="pcard__vide" loading="lazy">{% endif %}
+    {% if j.videos.exists %}<span class="pcard__badge">▶ Vidéo</span>{% endif %}
+  </span>
+  <span class="pcard__body">
+    <b>{{ j.prenom }} {{ j.nom }}</b>
+    <span>{{ j.poste_libelle }}{% if j.age %} · {{ j.age }} ans{% endif %}</span>
+    {% if j.club %}<small>{{ j.club }}</small>{% endif %}
+  </span>
+</a>

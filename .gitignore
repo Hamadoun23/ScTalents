@@ -7,3 +7,15 @@ desktop.ini
 .claude/
 # Photos, vidéos et logo bruts du client (les versions optimisées sont dans site/assets)
 /assets/
+
+# Django
+backend/.venv/
+backend/media/
+backend/db.sqlite3
+backend/staticfiles/
+__pycache__/
+*.pyc
+.env
+# CV fournis par le client (données personnelles)
+*.PDF
+*.pdf

@@ -1,0 +1,51 @@
+{% extends 'espace/base.html' %}
+{% block titre %}{% if v.pk %}{{ v }}{% else %}Nouvelle vidéo{% endif %}{% endblock %}
+{% block contenu %}
+<h1>{% if v.pk %}Modifier la vidéo{% else %}Ajouter une vidéo{% endif %}</h1>
+<p class="intro">Choisissez la vidéo sur votre téléphone ou votre ordinateur, donnez-lui un titre, et enregistrez. Elle sera allégée automatiquement pour charger vite sur le site.</p>
+
+<form method="post" enctype="multipart/form-data" class="fiche" data-envoi novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="suivant" value="{{ suivant }}">
+  {% for e in form.non_field_errors %}<div class="alerte alerte--error">{{ e }}</div>{% endfor %}
+
+  <section class="bloc">
+    <h2><span class="num">1</span> La vidéo</h2>
+    {% if v.fichier %}<video class="apercu-video" src="{{ v.fichier.url }}" controls preload="metadata"{% if v.apercu %} poster="{{ v.apercu }}"{% endif %}></video>{% endif %}
+    <div class="choix-fichier">
+      {% include 'espace/_champ.html' with f=form.fichier %}
+      <p class="ou">— ou —</p>
+      {% include 'espace/_champ.html' with f=form.youtube %}
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">2</span> Description</h2>
+    {% include 'espace/_champ.html' with f=form.titre %}
+    <div class="grille">
+      {% include 'espace/_champ.html' with f=form.categorie %}
+      {% include 'espace/_champ.html' with f=form.joueur %}
+    </div>
+    {% include 'espace/_champ.html' with f=form.description large=True %}
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">3</span> Publication</h2>
+    {% include 'espace/_champ.html' with f=form.publie %}
+    {% include 'espace/_champ.html' with f=form.a_la_une %}
+    <details class="avance">
+      <summary>Choisir moi-même l’image d’aperçu (facultatif)</summary>
+      {% if v.miniature %}<img src="{{ v.miniature.url }}" alt="" class="petit">{% endif %}
+      {% include 'espace/_champ.html' with f=form.miniature %}
+    </details>
+  </section>
+
+  <div class="progression" data-progression hidden><i></i><span>Envoi en cours… ne fermez pas la page.</span></div>
+  <div class="barre-envoi">
+    <button class="btn btn--grand" type="submit">✓ Enregistrer la vidéo</button>
+    <a class="lien" href="{{ suivant|default:'/espace/videos/' }}">Annuler</a>
+  </div>
+</form>
+
+{% if v.pk %}<p class="zone-danger"><a class="lien danger" href="{% url 'espace:video_supprimer' v.pk %}">Supprimer cette vidéo…</a></p>{% endif %}
+{% endblock %}

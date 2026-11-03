@@ -1,0 +1,109 @@
+{% extends 'espace/base.html' %}
+{% block titre %}{% if j.pk %}{{ j }}{% else %}Nouveau joueur{% endif %}{% endblock %}
+{% block contenu %}
+<div class="entete">
+  <h1>{% if j.pk %}Fiche de {{ j }}{% else %}Nouveau joueur{% endif %}</h1>
+  {% if j.pk %}<a class="btn btn--clair" href="{{ j.get_absolute_url }}" target="_blank">Voir la fiche sur le site ↗</a>{% endif %}
+</div>
+<p class="intro">Remplissez ce que vous savez : seuls le prénom, le nom et le poste sont obligatoires. Vous pourrez compléter plus tard.</p>
+
+<form method="post" enctype="multipart/form-data" class="fiche" novalidate>
+  {% csrf_token %}
+
+  <section class="bloc">
+    <h2><span class="num">1</span> Identité</h2>
+    <div class="grille">
+      {% include 'espace/_champ.html' with f=form.prenom %}
+      {% include 'espace/_champ.html' with f=form.nom %}
+      {% include 'espace/_champ.html' with f=form.date_naissance %}
+      {% include 'espace/_champ.html' with f=form.nationalite %}
+      {% include 'espace/_champ.html' with f=form.residence %}
+      {% include 'espace/_champ.html' with f=form.passeport_ue %}
+    </div>
+    <div class="photo-champ">
+      {% if j.photo %}<img src="{{ j.photo.url }}" alt="Photo actuelle">{% endif %}
+      {% include 'espace/_champ.html' with f=form.photo %}
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">2</span> Profil sportif</h2>
+    <div class="grille">
+      {% include 'espace/_champ.html' with f=form.poste %}
+      {% include 'espace/_champ.html' with f=form.poste_2 %}
+      {% include 'espace/_champ.html' with f=form.taille %}
+      {% include 'espace/_champ.html' with f=form.poids %}
+      {% include 'espace/_champ.html' with f=form.pied %}
+    </div>
+    {% include 'espace/_champ.html' with f=form.presentation large=True %}
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">3</span> Club actuel</h2>
+    <div class="grille">
+      {% include 'espace/_champ.html' with f=form.club %}
+      {% include 'espace/_champ.html' with f=form.club_niveau %}
+      {% include 'espace/_champ.html' with f=form.club_pays %}
+      {% include 'espace/_champ.html' with f=form.club_depuis %}
+    </div>
+    <div class="photo-champ">
+      {% if j.club_logo %}<img src="{{ j.club_logo.url }}" alt="Logo actuel" class="petit">{% endif %}
+      {% include 'espace/_champ.html' with f=form.club_logo %}
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">4</span> Carrière <small>(du plus récent au plus ancien)</small></h2>
+    {{ etapes.management_form }}
+    {% for e in etapes.non_form_errors %}<p class="erreur">{{ e }}</p>{% endfor %}
+    <div class="lignes" data-lignes="etapes">
+      {% for f in etapes %}{% include 'espace/_etape.html' %}{% endfor %}
+    </div>
+    <template data-modele="etapes">{% with f=etapes.empty_form %}{% include 'espace/_etape.html' %}{% endwith %}</template>
+    <button type="button" class="btn btn--clair" data-ajouter="etapes">＋ Ajouter un club</button>
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">5</span> Langues parlées</h2>
+    {{ langues.management_form }}
+    <div class="lignes" data-lignes="langues">
+      {% for f in langues %}{% include 'espace/_langue.html' %}{% endfor %}
+    </div>
+    <template data-modele="langues">{% with f=langues.empty_form %}{% include 'espace/_langue.html' %}{% endwith %}</template>
+    <button type="button" class="btn btn--clair" data-ajouter="langues">＋ Ajouter une langue</button>
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">6</span> Contacts du joueur <small>(privés)</small></h2>
+    <div class="grille">
+      {% include 'espace/_champ.html' with f=form.email %}
+      {% include 'espace/_champ.html' with f=form.telephone %}
+      {% include 'espace/_champ.html' with f=form.instagram %}
+      {% include 'espace/_champ.html' with f=form.facebook %}
+    </div>
+    {% include 'espace/_champ.html' with f=form.contacts_publics %}
+  </section>
+
+  <section class="bloc">
+    <h2><span class="num">7</span> Publication</h2>
+    {% include 'espace/_champ.html' with f=form.publie %}
+  </section>
+
+  <div class="barre-envoi">
+    <button class="btn btn--grand" type="submit">✓ Enregistrer la fiche</button>
+    <a class="lien" href="{% url 'espace:joueurs' %}">Annuler</a>
+  </div>
+</form>
+
+{% if j.pk %}
+<section class="bloc">
+  <h2>Vidéos de {{ j.prenom }}</h2>
+  {% if videos %}
+  <ul class="liste">{% for v in videos %}{% include 'espace/_ligne_video.html' %}{% endfor %}</ul>
+  {% else %}<p class="vide">Pas encore de vidéo pour ce joueur.</p>{% endif %}
+  <a class="btn btn--grand" href="{% url 'espace:video_nouvelle' %}?joueur={{ j.pk }}&suivant={{ request.path|urlencode }}">▶ Ajouter une vidéo de {{ j.prenom }}</a>
+</section>
+
+<p class="zone-danger"><a class="lien danger" href="{% url 'espace:joueur_supprimer' j.pk %}">Supprimer cette fiche…</a></p>
+{% endif %}
+{% endblock %}

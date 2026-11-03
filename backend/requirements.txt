@@ -1,0 +1,4 @@
+Django>=5.2,<5.3
+Pillow>=11
+segno>=1.6
+gunicorn>=23

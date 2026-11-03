@@ -1,0 +1,12 @@
+{% extends 'espace/base.html' %}
+{% block titre %}Confirmer{% endblock %}
+{% block contenu %}
+<div class="bloc confirmer">
+  <h1>{{ titre }}</h1>
+  <p>{{ texte }}</p>
+  <form method="post">{% csrf_token %}
+    <button class="btn btn--grand btn--danger" type="submit">Oui, supprimer</button>
+    <a class="btn btn--clair" href="{% url retour %}">Non, revenir</a>
+  </form>
+</div>
+{% endblock %}
