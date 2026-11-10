@@ -57,28 +57,22 @@
   <main id="contenu">{% block contenu %}{% endblock %}</main>
 
   <footer class="footer">
-    <div class="wrap footer__top">
-      <div class="footer__marque">
-        <img src="{% static 'img/logo/logo-sombre.webp' %}" alt="SC+ Talent & Sports — Sports Management Agency" width="900" height="875" loading="lazy">
-        <p>Révéler les talents, bâtir les champions.<br>Agence de management sportif à Bamako, Mali.</p>
+    <div class="wrap footer__cta">
+      <p class="display footer__accroche">Un talent à révéler&nbsp;?<br>Parlons-en.</p>
+      <div class="footer__actions">
+        <a class="btn-wa" href="{{ whatsapp_lien }}" target="_blank" rel="noopener">{% include '_icone_wa.html' %}WhatsApp</a>
+        <a class="footer__tel" href="{{ tel_lien }}">{{ tel_affiche }}</a>
       </div>
-      <nav class="footer__col" aria-label="Plan du site">
-        <h3>Le site</h3>
+    </div>
+    <div class="wrap footer__bas">
+      <a class="footer__logo" href="{% url 'accueil' %}" aria-label="SC+ Talent & Sports — accueil"><img src="{% static 'img/logo/horizontal-sombre.webp' %}" alt="SC+ Talent & Sports" width="855" height="160" loading="lazy"></a>
+      <nav class="footer__liens" aria-label="Plan du site">
         <a href="{% url 'accueil' %}">Accueil</a>
-        <a href="{% url 'joueurs' %}">Nos joueurs</a>
+        <a href="{% url 'joueurs' %}">Joueurs</a>
         <a href="{% url 'videos' %}">Vidéos</a>
         <a href="{% url 'accueil' %}#contact">Contact</a>
       </nav>
-      <div class="footer__col">
-        <h3>Nous joindre</h3>
-        <a href="{{ tel_lien }}">{{ tel_affiche }}</a>
-        <a class="btn-wa btn-wa--petit" href="{{ whatsapp_lien }}" target="_blank" rel="noopener">{% include '_icone_wa.html' %}WhatsApp</a>
-        <span>Bamako, Mali</span>
-      </div>
-    </div>
-    <div class="wrap footer__bottom">
-      <span>© <span id="annee">2026</span> SC+ Talent &amp; Sports</span>
-      <span>Une filiale de S-ComPlus SARL</span>
+      <p class="footer__copy">© <span id="annee">2026</span> SC+ Talent &amp; Sports · Filiale de S-ComPlus SARL · Bamako</p>
     </div>
     <div class="stripe" aria-hidden="true"></div>
   </footer>

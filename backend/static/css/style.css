@@ -268,17 +268,19 @@ body.no-scroll .header { z-index: 120; }
 .faq details p { padding: 0 0 20px; font-size: .9rem; max-width: 60ch; color: rgba(20,20,20,.65); }
 
 /* ===== Pied de page ===== */
-.footer { background: #161616; padding-top: 64px; border-top: 1px solid var(--line); }
-.footer__top { display: grid; gap: 36px; padding-bottom: 48px; }
-.footer__marque { display: grid; gap: 16px; justify-items: start; }
-.footer__marque img { width: 120px; height: auto; }
-.footer__marque p { font-size: .85rem; line-height: 1.5; color: var(--dim); }
-.footer__col { display: grid; gap: 10px; align-content: start; justify-items: start; font-size: .9rem; }
-.footer__col h3 { font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
-.footer__col a { text-decoration: none; }
-.footer__col a:hover { color: var(--gold); }
-.footer__col span { color: var(--dim); }
-.footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding: 20px 0 90px; font-size: .72rem; color: var(--dim); border-top: 1px solid var(--line); }
+/* Pied de page : une accroche, puis une seule ligne fine */
+.footer { background: #141414; border-top: 1px solid var(--line); }
+.footer__cta { display: grid; gap: 28px; padding: 64px 0 52px; }
+.footer__accroche { font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1; }
+.footer__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.footer__tel { font-size: 1rem; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); padding-bottom: 2px; transition: border-color .25s; }
+.footer__tel:hover { border-color: #fff; }
+.footer__bas { display: grid; gap: 18px; justify-items: start; padding: 26px 0 96px; border-top: 1px solid var(--line); }
+.footer__logo img { height: 26px; width: auto; opacity: .9; }
+.footer__liens { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.footer__liens a { font-size: .85rem; text-decoration: none; color: rgba(255,255,255,.75); transition: color .2s; }
+.footer__liens a:hover { color: #fff; }
+.footer__copy { font-size: .74rem; color: var(--dim); }
 
 /* WhatsApp : bouton du contact, du pied de page et bouton flottant */
 .ico-wa { width: 20px; height: 20px; flex: none; }
@@ -340,7 +342,9 @@ body.no-scroll .wa-flottant { display: none; }
   .ready__panel { padding: 80px 56px; }
 
   .contact__title { margin-bottom: 40px; }
-  .footer__top { grid-template-columns: 2fr 1fr 1fr; }
+  .footer__cta { grid-template-columns: 1fr auto; align-items: end; padding: 90px 0 70px; }
+  .footer__bas { grid-template-columns: auto 1fr auto; align-items: center; gap: 40px; padding: 28px 90px 28px 0; }
+  .footer__liens { justify-content: center; }
   .wa-flottant { right: 28px; bottom: 28px; }
   .form { grid-template-columns: 1fr 1fr; padding: 26px 30px; }
   .form__full { grid-column: 1 / -1; }
