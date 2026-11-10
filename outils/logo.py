@@ -125,5 +125,5 @@ og.convert('RGB').save('site/assets/img/og.jpg', quality=85)
 # seuls ces fichiers sont utilisés par le site publié
 import shutil, os
 os.makedirs('site/assets/img/logo', exist_ok=True)
-for f in ['horizontal-sombre.webp', 'logo-sombre.webp', 'apple-touch-icon.png']:
+for f in ['horizontal-sombre.webp', 'horizontal-clair.webp', 'logo-sombre.webp', 'apple-touch-icon.png']:
     shutil.copy(out + f, 'site/assets/img/logo/' + f)

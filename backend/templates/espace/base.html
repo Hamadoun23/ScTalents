@@ -15,7 +15,7 @@
 <body class="{% block body_class %}{% endblock %}">
   {% if user.is_authenticated %}
   <header class="top">
-    <a class="top__logo" href="{% url 'espace:tableau' %}"><img src="{% static 'img/logo/horizontal-sombre.webp' %}" alt="SC+ Talent & Sports" width="855" height="160"></a>
+    <a class="top__logo" href="{% url 'espace:tableau' %}"><img src="{% static 'img/logo/horizontal-clair.webp' %}" alt="SC+ Talent & Sports" width="855" height="160"></a>
     <nav class="top__nav">
       {% url 'espace:tableau' as u0 %}{% url 'espace:joueurs' as u1 %}{% url 'espace:videos' as u2 %}{% url 'espace:messages' as u3 %}
       <a href="{{ u0 }}"{% if request.path == u0 %} class="on"{% endif %}>Accueil</a>

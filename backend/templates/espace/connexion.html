@@ -18,7 +18,7 @@
   <main class="login__panneau">
     <a class="login__retour" href="{% url 'accueil' %}">← Retour au site</a>
 
-    <div class="login__boite" data-etape="formulaire">
+    <div class="login__boite">
       <h1>Connexion</h1>
       <p class="login__intro">Espace réservé à l’équipe SC+.</p>
 
@@ -43,20 +43,10 @@
       <p class="login__aide">Mot de passe oublié&nbsp;? Contactez l’administrateur.</p>
     </div>
 
-    <!-- Après connexion : proposer d'enregistrer le mot de passe -->
-    <div class="login__boite login__succes" data-etape="succes" hidden>
-      <span class="login__coche" aria-hidden="true">✓</span>
-      <h1>Vous êtes connecté</h1>
-      <p class="login__intro">Votre navigateur vous propose d’<b>enregistrer votre mot de passe</b> (fenêtre en haut de l’écran). Acceptez : la prochaine fois, il sera rempli tout seul.</p>
-      <a class="login__bouton" href="#" data-continuer><span>Accéder à l’espace admin</span><i aria-hidden="true">→</i></a>
-    </div>
   </main>
 </div>
 
 <script>
-  const form = document.querySelector('[data-connexion]');
-  const erreur = document.querySelector('[data-erreur]');
-
   // Afficher / masquer le mot de passe
   document.querySelector('[data-voir]').addEventListener('click', (e) => {
     const champ = document.getElementById('id_password');
@@ -66,37 +56,9 @@
     e.currentTarget.setAttribute('aria-label', visible ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
     champ.focus();
   });
-
-  // Navigateurs qui savent enregistrer un mot de passe à la demande du site (Chrome, Edge, Android) :
-  // on se connecte en arrière-plan, puis on propose explicitement l'enregistrement.
-  // Les autres (Safari, Firefox) gardent l'envoi classique, qui déclenche leur propre proposition.
-  if (window.PasswordCredential && navigator.credentials) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const bouton = form.querySelector('.login__bouton');
-      bouton.disabled = true;
-      erreur.hidden = true;
-      try {
-        const r = await fetch(location.href, { method: 'POST', body: new FormData(form), credentials: 'same-origin' });
-        if (!r.redirected || r.url.includes('/connexion/')) throw new Error('refus');
-        const id = form.username.value.trim();
-        const dejaPropose = (() => { try { return localStorage.getItem('mdp-propose-' + id); } catch { return null; } })();
-        if (dejaPropose) { location.href = r.url; return; }
-        // succès : on montre l'écran de confirmation, puis la proposition du navigateur
-        document.querySelector('[data-etape="formulaire"]').hidden = true;
-        const succes = document.querySelector('[data-etape="succes"]');
-        succes.hidden = false;
-        succes.querySelector('[data-continuer]').href = r.url;
-        try { localStorage.setItem('mdp-propose-' + id, '1'); } catch {}
-        await navigator.credentials.store(new PasswordCredential({ id, password: form.password.value, name: id }));
-      } catch (err) {
-        erreur.hidden = false;
-        form.password.value = '';
-        form.password.focus();
-      } finally {
-        bouton.disabled = false;
-      }
-    });
-  }
+  // envoi classique : le navigateur propose ensuite d'enregistrer le mot de passe
+  document.querySelector('[data-connexion]').addEventListener('submit', (e) => {
+    e.currentTarget.querySelector('.login__bouton').disabled = true;
+  });
 </script>
 {% endblock %}

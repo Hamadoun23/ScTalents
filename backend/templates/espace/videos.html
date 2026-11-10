@@ -3,7 +3,7 @@
 {% block contenu %}
 <div class="entete">
   <h1>Vidéos</h1>
-  <a class="btn btn--grand" href="{% url 'espace:video_nouvelle' %}">▶ Ajouter une vidéo</a>
+  <a class="btn btn--grand" href="{% url 'espace:video_nouvelle' %}">+ Ajouter une vidéo</a>
 </div>
 <nav class="filtres">
   <a class="chip{% if not categorie %} on{% endif %}" href="{% url 'espace:videos' %}">Toutes</a>
