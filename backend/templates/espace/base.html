@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{% static 'css/espace.css' %}">
   <script src="{% static 'js/espace.js' %}" defer></script>
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
   {% if user.is_authenticated %}
   <header class="top">
     <a class="top__logo" href="{% url 'espace:tableau' %}"><img src="{% static 'img/logo/horizontal-sombre.webp' %}" alt="SC+ Talent & Sports" width="855" height="160"></a>
@@ -30,9 +30,11 @@
   </header>
   {% endif %}
 
+  {% block page %}
   <main class="wrap">
     {% for m in messages %}<div class="alerte alerte--{{ m.level_tag }}" role="status">{{ m }}</div>{% endfor %}
     {% block contenu %}{% endblock %}
   </main>
+  {% endblock %}
 </body>
 </html>

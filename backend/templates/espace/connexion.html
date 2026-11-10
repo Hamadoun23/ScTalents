@@ -1,18 +1,60 @@
 {% extends 'espace/base.html' %}{% load static %}
 {% block titre %}Connexion{% endblock %}
-{% block contenu %}
-<div class="connexion">
-  <img src="{% static 'img/logo/logo-sombre.webp' %}" alt="SC+ Talent & Sports" width="200" height="194">
-  <h1>Espace admin</h1>
-  <p>Connectez-vous pour modifier les joueurs et les vidéos du site.</p>
-  <form method="post" class="bloc">
-    {% csrf_token %}
-    {% if form.non_field_errors %}<div class="alerte alerte--error">Identifiant ou mot de passe incorrect.</div>{% endif %}
-    <div class="champ"><label for="id_username">Identifiant</label><input id="id_username" name="username" required autofocus autocomplete="username" autocapitalize="none" value="{{ form.username.value|default:'' }}"></div>
-    <div class="champ"><label for="id_password">Mot de passe</label><input id="id_password" type="password" name="password" required autocomplete="current-password"></div>
-    <input type="hidden" name="next" value="{{ next }}">
-    <button class="btn btn--grand" type="submit">Se connecter</button>
-  </form>
-  <a class="lien" href="{% url 'accueil' %}">← Retour au site</a>
+{% block body_class %}page-connexion{% endblock %}
+{% block page %}
+<div class="login">
+  <!-- Côté image -->
+  <aside class="login__visuel">
+    <img class="login__photo" src="{% static 'img/sc/equipe-rayee.webp' %}" alt="">
+    <div class="login__voile"></div>
+    <div class="login__marque">
+      <img src="{% static 'img/logo/horizontal-sombre.webp' %}" alt="SC+ Talent & Sports" width="855" height="160">
+      <p class="login__slogan">Révéler les talents,<br><span>bâtir les champions.</span></p>
+    </div>
+    <div class="stripe" aria-hidden="true"></div>
+  </aside>
+
+  <!-- Côté formulaire -->
+  <main class="login__panneau">
+    <div class="login__boite">
+      <p class="login__sur">Espace admin</p>
+      <h1>Bon retour parmi nous</h1>
+      <p class="login__intro">Connectez-vous pour gérer les joueurs, les vidéos et les messages du site.</p>
+
+      {% if form.non_field_errors %}<div class="alerte alerte--error" role="alert">Identifiant ou mot de passe incorrect. Vérifiez et réessayez.</div>{% endif %}
+      {% for m in messages %}<div class="alerte alerte--{{ m.level_tag }}" role="status">{{ m }}</div>{% endfor %}
+
+      <form method="post" class="login__form">
+        {% csrf_token %}
+        <div class="champ">
+          <label for="id_username">Identifiant</label>
+          <input id="id_username" name="username" required autofocus autocomplete="username" autocapitalize="none" spellcheck="false" value="{{ form.username.value|default:'' }}">
+        </div>
+        <div class="champ">
+          <label for="id_password">Mot de passe</label>
+          <div class="mdp">
+            <input id="id_password" type="password" name="password" required autocomplete="current-password">
+            <button type="button" class="mdp__voir" data-voir aria-label="Afficher le mot de passe">Afficher</button>
+          </div>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button class="btn btn--grand login__bouton" type="submit">Se connecter</button>
+      </form>
+
+      <p class="login__aide">Mot de passe oublié&nbsp;? Contactez l’administrateur du site.</p>
+      <a class="login__retour" href="{% url 'accueil' %}">← Retour au site</a>
+    </div>
+  </main>
 </div>
+<script>
+  // Afficher / masquer le mot de passe
+  document.querySelector('[data-voir]').addEventListener('click', (e) => {
+    const champ = document.getElementById('id_password');
+    const visible = champ.type === 'text';
+    champ.type = visible ? 'password' : 'text';
+    e.currentTarget.textContent = visible ? 'Afficher' : 'Masquer';
+    e.currentTarget.setAttribute('aria-label', visible ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
+    champ.focus();
+  });
+</script>
 {% endblock %}

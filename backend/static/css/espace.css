@@ -50,11 +50,40 @@ h2 small { font-weight: 400; color: var(--doux); font-size: .85rem; }
 .alerte--error { background: #FDECEC; border-color: var(--rouge); color: #7F1D1D; }
 .alerte--info, .alerte--warning { background: #FFF6DB; border-color: var(--or); }
 
-/* Connexion */
-.connexion { max-width: 420px; margin: 8vh auto 0; display: grid; gap: 14px; text-align: center; }
-.connexion img { width: 130px; margin: 0 auto; }
-.connexion .bloc { text-align: left; }
-.connexion .btn { width: 100%; }
+/* Connexion : photo + logo à gauche, formulaire à droite (photo en bandeau sur mobile) */
+.page-connexion { background: #fff; }
+.login { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; }
+.login__visuel { position: relative; min-height: 230px; overflow: hidden; background: #0B0C0E; color: #fff; display: flex; align-items: flex-end; }
+.login__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.login__voile { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(1,29,68,.95) 0%, rgba(1,29,68,.55) 55%, rgba(11,12,14,.35) 100%); }
+.login__marque { position: relative; display: grid; gap: 14px; padding: 26px 22px 30px; }
+.login__marque img { width: 190px; height: auto; }
+.login__slogan { margin: 0; font: 800 1.35rem/1.05 var(--font); font-stretch: 118%; text-transform: uppercase; }
+.login__slogan span { color: var(--or); }
+.login__visuel .stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, #14B53A 0 33.3%, #FCD116 33.3% 66.6%, #CE1126 66.6%); }
+.login__panneau { display: grid; place-items: center; padding: 36px 22px 48px; }
+.login__boite { width: min(400px, 100%); display: grid; gap: 6px; }
+.login__sur { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
+.login__boite h1 { margin: 2px 0 4px; font-size: clamp(1.6rem, 4vw, 2.1rem); }
+.login__intro { margin: 0 0 22px; color: var(--doux); }
+.login__form { display: grid; gap: 2px; }
+.login__form input:not([type=hidden]) { background: #F7F7F4; }
+.login__form input:focus { background: #fff; }
+.mdp { position: relative; }
+.mdp input { padding-right: 96px; }
+.mdp__voir { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #ECECE8; color: var(--bleu); font: 600 .82rem var(--font); cursor: pointer; }
+.mdp__voir:hover { background: #E0E0DA; }
+.login__bouton { width: 100%; margin-top: 8px; background: var(--bleu); border-color: var(--bleu); }
+.login__aide { margin: 18px 0 0; font-size: .85rem; color: var(--doux); }
+.login__retour { margin-top: 6px; font-size: .9rem; color: var(--doux); text-decoration: none; }
+.login__retour:hover { color: var(--bleu); }
+@media (min-width: 900px) {
+  .login { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; }
+  .login__visuel { min-height: 100svh; }
+  .login__marque { padding: 56px; gap: 22px; }
+  .login__marque img { width: 240px; }
+  .login__slogan { font-size: clamp(2.2rem, 3.6vw, 3.4rem); }
+}
 
 /* Tableau de bord : tuiles */
 .tuiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 36px; }
