@@ -128,6 +128,7 @@
         {% endif %}
       </div>
       <div class="cv__actions no-print">
+        <a class="btn-wa" href="https://wa.me/{{ whatsapp_numero }}?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20joueur%20{{ j.prenom|urlencode }}%20{{ j.nom|urlencode }}%20(fiche%20SC%2B%20Talent%20%26%20Sports)." target="_blank" rel="noopener">{% include '_icone_wa.html' %}WhatsApp</a>
         <a class="btn btn--light" href="{% url 'accueil' %}#contact">Contacter l’agence</a>
         <button class="btn btn--line" type="button" onclick="window.print()">Imprimer / PDF</button>
       </div>

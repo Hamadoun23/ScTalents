@@ -47,6 +47,7 @@ TEMPLATES = [{
         'django.template.context_processors.request',
         'django.contrib.auth.context_processors.auth',
         'django.contrib.messages.context_processors.messages',
+        'core.contexte.coordonnees',
     ]},
 }]
 
@@ -78,6 +79,9 @@ MEDIA_ROOT = DATA_DIR / 'media'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+# Numéro de l'agence (appel et WhatsApp), affiché sur tout le site
+CONTACT_TELEPHONE = '+223 71 60 75 57'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'espace:connexion'

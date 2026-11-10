@@ -128,6 +128,14 @@
 <section class="contact" id="contact">
   <div class="wrap">
     <h2 class="display contact__title" data-blur>Donnons vie à votre projet</h2>
+    <div class="contact__direct">
+      <p>Le plus simple : écrivez-nous ou appelez-nous directement.</p>
+      <div class="contact__boutons">
+        <a class="btn-wa" href="{{ whatsapp_lien }}" target="_blank" rel="noopener">{% include '_icone_wa.html' %}Écrire sur WhatsApp</a>
+        <a class="btn btn--line contact__tel" href="{{ tel_lien }}">Appeler le {{ tel_affiche }}</a>
+      </div>
+      <p class="contact__ou">ou laissez-nous un message :</p>
+    </div>
     {% for m in messages %}<p class="form__msg {% if m.level_tag == 'success' %}ok{% else %}err{% endif %} center">{{ m }}</p>{% endfor %}
     <form class="form" method="post" action="{% url 'contact' %}" data-contact novalidate>
       {% csrf_token %}
