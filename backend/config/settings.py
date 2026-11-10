@@ -72,6 +72,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# En production, chaque version des fichiers CSS/JS/images reçoit un nom unique (ex. style.3f2a.css) :
+# les navigateurs ne gardent jamais une ancienne feuille de style en cache.
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage' if DEBUG
+                    else 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'},
+}
 MEDIA_URL = '/media/'
 MEDIA_ROOT = DATA_DIR / 'media'
 
