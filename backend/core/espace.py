@@ -61,7 +61,7 @@ def joueur_form(request, pk=None):
         if form.is_valid() and etapes.is_valid() and langues.is_valid():
             with transaction.atomic():
                 j = form.save(commit=False)
-                alleger_image(j.photo, 900)
+                alleger_image(j.photo, 1200)
                 alleger_image(j.club_logo, 400)
                 j.save()
                 etapes.instance = langues.instance = j

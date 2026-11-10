@@ -1,6 +1,6 @@
 """Allègement des médias envoyés depuis l'espace admin.
 
-- Photos et logos : réduits et convertis en WebP au moment de l'enregistrement.
+- Photos et logos : réduits et convertis en WebP (qualité 86, légère netteté) à l'enregistrement.
 - Vidéos : réencodées en tâche de fond par ffmpeg (640 px, son mono), avec une
   image d'aperçu tirée de la vidéo. Le site reste utilisable pendant ce temps.
 """
@@ -14,7 +14,7 @@ from pathlib import Path
 
 from django.core.files.base import ContentFile
 from django.db import close_old_connections
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 log = logging.getLogger('core')
 
@@ -34,8 +34,10 @@ def alleger_image(champ, max_px=1200):
     garde_transparence = im.mode in ('RGBA', 'LA', 'P')
     im = im.convert('RGBA' if garde_transparence else 'RGB')
     im.thumbnail((max_px, max_px), Image.LANCZOS)
+    if im.mode == 'RGB':   # légère netteté (pas sur les logos transparents)
+        im = im.filter(ImageFilter.UnsharpMask(radius=1.1, percent=60, threshold=2))
     buf = BytesIO()
-    im.save(buf, 'WEBP', quality=78, method=6)
+    im.save(buf, 'WEBP', quality=86, method=6)
     nom = Path(champ.name).stem[:60] + '.webp'
     champ.save(nom, ContentFile(buf.getvalue()), save=False)
 
@@ -72,7 +74,7 @@ def _preparer(video_id):
             im = Image.open(BytesIO(png)).convert('RGB')
             im.thumbnail((640, 640))
             buf = BytesIO()
-            im.save(buf, 'WEBP', quality=70)
+            im.save(buf, 'WEBP', quality=82)
             v.miniature.save(f'{Path(v.fichier.name).stem}.webp', ContentFile(buf.getvalue()), save=False)
         v.etat = 'pret'
         v.save(update_fields=['fichier', 'miniature', 'etat'])
