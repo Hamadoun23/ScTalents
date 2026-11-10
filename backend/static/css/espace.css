@@ -61,22 +61,37 @@ h2 small { font-weight: 400; color: var(--doux); font-size: .85rem; }
 .login__slogan { margin: 0; font: 800 1.35rem/1.05 var(--font); font-stretch: 118%; text-transform: uppercase; }
 .login__slogan span { color: var(--or); }
 .login__visuel .stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, #14B53A 0 33.3%, #FCD116 33.3% 66.6%, #CE1126 66.6%); }
-.login__panneau { display: grid; place-items: center; padding: 36px 22px 48px; }
-.login__boite { width: min(400px, 100%); display: grid; gap: 6px; }
-.login__sur { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
-.login__boite h1 { margin: 2px 0 4px; font-size: clamp(1.6rem, 4vw, 2.1rem); }
-.login__intro { margin: 0 0 22px; color: var(--doux); }
-.login__form { display: grid; gap: 2px; }
-.login__form input:not([type=hidden]) { background: #F7F7F4; }
-.login__form input:focus { background: #fff; }
-.mdp { position: relative; }
-.mdp input { padding-right: 96px; }
-.mdp__voir { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #ECECE8; color: var(--bleu); font: 600 .82rem var(--font); cursor: pointer; }
-.mdp__voir:hover { background: #E0E0DA; }
-.login__bouton { width: 100%; margin-top: 8px; background: var(--bleu); border-color: var(--bleu); }
-.login__aide { margin: 18px 0 0; font-size: .85rem; color: var(--doux); }
-.login__retour { margin-top: 6px; font-size: .9rem; color: var(--doux); text-decoration: none; }
-.login__retour:hover { color: var(--bleu); }
+.login__panneau { position: relative; display: grid; place-items: center; padding: 56px 24px 48px; background: #fff; }
+.login__retour { position: absolute; top: 20px; right: 24px; font-size: .85rem; color: var(--doux); text-decoration: none; }
+.login__retour:hover { color: var(--texte); }
+.login__boite { width: min(360px, 100%); display: grid; gap: 8px; }
+.login__boite h1 { margin: 0; font: 800 clamp(2rem, 5vw, 2.6rem)/1 var(--font); font-stretch: 112%; letter-spacing: -.01em; }
+.login__intro { margin: 4px 0 26px; color: var(--doux); }
+.login__erreur { padding: 12px 14px; margin-bottom: 14px; border-radius: 12px; background: #FDECEC; color: #8A1C1C; font-size: .92rem; font-weight: 600; }
+.login__form { display: grid; gap: 12px; }
+
+/* Champs à libellé flottant : le libellé est dans le champ et remonte quand on écrit */
+.flottant { position: relative; display: block; }
+.flottant input { width: 100%; height: 58px; padding: 22px 16px 6px; border: 0 !important; border-radius: 14px; background: #F2F2EF; font: 500 1rem var(--font); color: var(--texte); outline: none; box-shadow: inset 0 0 0 1.5px transparent; transition: box-shadow .2s, background .2s; }
+.flottant input:hover { background: #ECECE8; }
+.flottant input:focus { background: #fff; box-shadow: inset 0 0 0 1.5px var(--bleu), 0 0 0 4px rgba(1,29,68,.08); }
+.flottant span { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 1rem; color: #7A7D82; pointer-events: none; transition: top .18s, font-size .18s, color .18s; }
+.flottant input:focus + span, .flottant input:not(:placeholder-shown) + span { top: 17px; font-size: .74rem; color: var(--doux); }
+.flottant input[type=password], .flottant input[name=password] { padding-right: 52px; }
+.oeil { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 10px; background: none; color: #8A8D92; cursor: pointer; }
+.oeil svg { width: 21px; height: 21px; fill: currentColor; }
+.oeil:hover, .oeil.on { color: var(--bleu); background: rgba(1,29,68,.06); }
+
+.login__bouton { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 56px; margin-top: 6px; border: 0; border-radius: 14px; background: var(--bleu); color: #fff; font: 600 1.02rem var(--font); text-decoration: none; cursor: pointer; transition: background .2s, transform .2s; }
+.login__bouton i { font-style: normal; transition: transform .25s; }
+.login__bouton:hover { background: #062B5E; }
+.login__bouton:hover i { transform: translateX(4px); }
+.login__bouton:disabled { opacity: .6; cursor: wait; }
+.login__aide { margin: 18px 0 0; font-size: .85rem; color: var(--doux); text-align: center; }
+.login__succes { text-align: center; justify-items: center; }
+.login__coche { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 10px; border-radius: 50%; background: #E7F5EA; color: var(--vert); font-size: 1.8rem; font-weight: 700; }
+.login__succes .login__intro { margin-bottom: 20px; }
+
 @media (min-width: 900px) {
   .login { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; }
   .login__visuel { min-height: 100svh; }
@@ -129,7 +144,7 @@ h2 small { font-weight: 400; color: var(--doux); font-size: .85rem; }
 .champ { display: grid; gap: 6px; margin-bottom: 14px; }
 .champ > label { font-weight: 600; }
 .champ > label small { font-weight: 400; color: var(--doux); }
-input:not([type=checkbox]):not([type=radio]):not([type=file]), select, textarea {
+input:where(:not([type=checkbox]):not([type=radio]):not([type=file])), select, textarea {
   width: 100%; min-height: 48px; padding: 10px 12px; border: 2px solid var(--bord); border-radius: 10px;
   background: #fff; font: inherit; color: inherit;
 }

@@ -16,45 +16,87 @@
 
   <!-- Côté formulaire -->
   <main class="login__panneau">
-    <div class="login__boite">
-      <p class="login__sur">Espace admin</p>
-      <h1>Bon retour parmi nous</h1>
-      <p class="login__intro">Connectez-vous pour gérer les joueurs, les vidéos et les messages du site.</p>
+    <a class="login__retour" href="{% url 'accueil' %}">← Retour au site</a>
 
-      {% if form.non_field_errors %}<div class="alerte alerte--error" role="alert">Identifiant ou mot de passe incorrect. Vérifiez et réessayez.</div>{% endif %}
-      {% for m in messages %}<div class="alerte alerte--{{ m.level_tag }}" role="status">{{ m }}</div>{% endfor %}
+    <div class="login__boite" data-etape="formulaire">
+      <h1>Connexion</h1>
+      <p class="login__intro">Espace réservé à l’équipe SC+.</p>
 
-      <form method="post" class="login__form">
+      <div class="login__erreur" data-erreur role="alert"{% if not form.non_field_errors %} hidden{% endif %}>Identifiant ou mot de passe incorrect.</div>
+
+      <form method="post" class="login__form" data-connexion>
         {% csrf_token %}
-        <div class="champ">
-          <label for="id_username">Identifiant</label>
-          <input id="id_username" name="username" required autofocus autocomplete="username" autocapitalize="none" spellcheck="false" value="{{ form.username.value|default:'' }}">
-        </div>
-        <div class="champ">
-          <label for="id_password">Mot de passe</label>
-          <div class="mdp">
-            <input id="id_password" type="password" name="password" required autocomplete="current-password">
-            <button type="button" class="mdp__voir" data-voir aria-label="Afficher le mot de passe">Afficher</button>
-          </div>
-        </div>
+        <label class="flottant">
+          <input id="id_username" name="username" required autofocus autocomplete="username" autocapitalize="none" spellcheck="false" placeholder=" " value="{{ form.username.value|default:'' }}">
+          <span>Identifiant</span>
+        </label>
+        <label class="flottant">
+          <input id="id_password" type="password" name="password" required autocomplete="current-password" placeholder=" ">
+          <span>Mot de passe</span>
+          <button type="button" class="oeil" data-voir aria-label="Afficher le mot de passe">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5C6.5 5 2.7 9.4 1.5 12c1.2 2.6 5 7 10.5 7s9.3-4.4 10.5-7C21.3 9.4 17.5 5 12 5zm0 11.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
+          </button>
+        </label>
         <input type="hidden" name="next" value="{{ next }}">
-        <button class="btn btn--grand login__bouton" type="submit">Se connecter</button>
+        <button class="login__bouton" type="submit"><span>Se connecter</span><i aria-hidden="true">→</i></button>
       </form>
+      <p class="login__aide">Mot de passe oublié&nbsp;? Contactez l’administrateur.</p>
+    </div>
 
-      <p class="login__aide">Mot de passe oublié&nbsp;? Contactez l’administrateur du site.</p>
-      <a class="login__retour" href="{% url 'accueil' %}">← Retour au site</a>
+    <!-- Après connexion : proposer d'enregistrer le mot de passe -->
+    <div class="login__boite login__succes" data-etape="succes" hidden>
+      <span class="login__coche" aria-hidden="true">✓</span>
+      <h1>Vous êtes connecté</h1>
+      <p class="login__intro">Votre navigateur vous propose d’<b>enregistrer votre mot de passe</b> (fenêtre en haut de l’écran). Acceptez : la prochaine fois, il sera rempli tout seul.</p>
+      <a class="login__bouton" href="#" data-continuer><span>Accéder à l’espace admin</span><i aria-hidden="true">→</i></a>
     </div>
   </main>
 </div>
+
 <script>
+  const form = document.querySelector('[data-connexion]');
+  const erreur = document.querySelector('[data-erreur]');
+
   // Afficher / masquer le mot de passe
   document.querySelector('[data-voir]').addEventListener('click', (e) => {
     const champ = document.getElementById('id_password');
     const visible = champ.type === 'text';
     champ.type = visible ? 'password' : 'text';
-    e.currentTarget.textContent = visible ? 'Afficher' : 'Masquer';
+    e.currentTarget.classList.toggle('on', !visible);
     e.currentTarget.setAttribute('aria-label', visible ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
     champ.focus();
   });
+
+  // Navigateurs qui savent enregistrer un mot de passe à la demande du site (Chrome, Edge, Android) :
+  // on se connecte en arrière-plan, puis on propose explicitement l'enregistrement.
+  // Les autres (Safari, Firefox) gardent l'envoi classique, qui déclenche leur propre proposition.
+  if (window.PasswordCredential && navigator.credentials) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const bouton = form.querySelector('.login__bouton');
+      bouton.disabled = true;
+      erreur.hidden = true;
+      try {
+        const r = await fetch(location.href, { method: 'POST', body: new FormData(form), credentials: 'same-origin' });
+        if (!r.redirected || r.url.includes('/connexion/')) throw new Error('refus');
+        const id = form.username.value.trim();
+        const dejaPropose = (() => { try { return localStorage.getItem('mdp-propose-' + id); } catch { return null; } })();
+        if (dejaPropose) { location.href = r.url; return; }
+        // succès : on montre l'écran de confirmation, puis la proposition du navigateur
+        document.querySelector('[data-etape="formulaire"]').hidden = true;
+        const succes = document.querySelector('[data-etape="succes"]');
+        succes.hidden = false;
+        succes.querySelector('[data-continuer]').href = r.url;
+        try { localStorage.setItem('mdp-propose-' + id, '1'); } catch {}
+        await navigator.credentials.store(new PasswordCredential({ id, password: form.password.value, name: id }));
+      } catch (err) {
+        erreur.hidden = false;
+        form.password.value = '';
+        form.password.focus();
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+  }
 </script>
 {% endblock %}
